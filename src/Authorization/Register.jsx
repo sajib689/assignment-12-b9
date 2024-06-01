@@ -36,6 +36,16 @@ const Register = () => {
       formData.append('image', data.photoURL[0]);
       const res = await axios.post(image_url, formData);
       const image = res.data.data.display_url
+      if (data.password.length < 6) {
+        toast.error("Password must be at least 6 characters long!");
+        return
+      } else if (!/[A-Z]/.test(data.password)) {
+        toast.error("Password must contain at least one uppercase letter!");
+        return;
+      } else if (!/[a-z]/.test(data.password)) {
+        toast.error("Password must contain at least one lowercase letter!");
+        return;
+      }
       registerByFiled(data.email, data.password)
       .then(result => {
         const user = result.user
@@ -52,6 +62,7 @@ const Register = () => {
                 timer: 1500
               });
         }
+        reset()
       })
       .catch(err => {
         Swal.fire({
