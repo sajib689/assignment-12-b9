@@ -1,4 +1,5 @@
 import { Rating } from "primereact/rating";
+import { Link } from "react-router-dom";
 
 const TopScholarShipsCard = ({ university }) => {
   const { _id, universityName, universityImage, applicationFees, rating } =
@@ -32,9 +33,9 @@ const TopScholarShipsCard = ({ university }) => {
           <span className="font-bold text-gray-800 dark:text-gray-200">
             ${applicationFees}
           </span>
-          <button className="px-2 py-1 text-xs font-semibold text-white uppercase transition-colors duration-300 transform bg-gray-800 rounded hover:bg-gray-700 dark:hover:bg-gray-600 focus:bg-gray-700 dark:focus:bg-gray-600 focus:outline-none">
+          <Link className="px-2 py-1 text-xs font-medium tracking-wide text-white capitalize transition-colors duration-300 transform bg-blue-600 rounded-lg hover:bg-blue-500 focus:outline-none focus:ring focus:ring-blue-300 focus:ring-opacity-80">
             Details
-          </button>
+          </Link>
         </div>
       </div>
     </div>
