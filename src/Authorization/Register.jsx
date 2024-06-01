@@ -7,11 +7,9 @@ import { useLocation, useNavigate } from 'react-router-dom';
 import useAuth from './../Hooks/useAuth';
 import toast, { Toaster } from 'react-hot-toast';
 import Swal from 'sweetalert2';
-import useAxiosPublic from '../Hooks/useAxiosPublic'; // Import your axios hook
 import { useForm } from 'react-hook-form';
 import { updateProfile } from 'firebase/auth';
 
-// Assuming your environment variable setup is correct
 const image_api_key = import.meta.env.VITE_IMAGE_API_KEY;
 const image_url = `https://api.imgbb.com/1/upload?key=${image_api_key}`;
 
@@ -19,7 +17,6 @@ const Register = () => {
   const { registerByFiled, google, gitHub } = useAuth();
   const navigate = useNavigate();
   const location = useLocation();
-  const axiosPublic = useAxiosPublic();
 
   // Register form setup using react-hook-form
   const {
@@ -36,6 +33,7 @@ const Register = () => {
       formData.append('image', data.photoURL[0]);
       const res = await axios.post(image_url, formData);
       const image = res.data.data.display_url
+      // end image upload complete
       if (data.password.length < 6) {
         toast.error("Password must be at least 6 characters long!");
         return
@@ -55,7 +53,7 @@ const Register = () => {
         })
         if(data) {
             Swal.fire({
-                position: "top-end",
+                position: "top-center",
                 icon: "success",
                 title: "Sign In Success",
                 showConfirmButton: false,
@@ -63,6 +61,7 @@ const Register = () => {
               });
         }
         reset()
+        navigate(location.state ? location.state : '/login')
       })
       .catch(err => {
         Swal.fire({
