@@ -40,6 +40,12 @@ const Navbar = () => {
         Sign In
       </Link>
       <Link
+        to="/register"
+        className="my-2 text-gray-700 transition-colors duration-300 transform dark:text-gray-200 hover:text-blue-500 dark:hover:text-blue-400 md:mx-4 md:my-0"
+      >
+        Sign Up
+      </Link>
+      <Link
         to="/logout"
         className="my-2 text-gray-700 transition-colors duration-300 transform dark:text-gray-200 hover:text-blue-500 dark:hover:text-blue-400 md:mx-4 md:my-0"
       >
