@@ -14,7 +14,7 @@ const image_api_key = import.meta.env.VITE_IMAGE_API_KEY;
 const image_url = `https://api.imgbb.com/1/upload?key=${image_api_key}`;
 
 const Register = () => {
-  const { registerByFiled, google, gitHub } = useAuth();
+  const { registerByFiled } = useAuth();
   const navigate = useNavigate();
   const location = useLocation();
   const axiosPublic = useAxiosPublic();
@@ -142,6 +142,7 @@ const Register = () => {
               </p>
             </div>
           </div>
+          <div>
           <form
             onSubmit={handleSubmit(onSubmit)}
             noValidate
@@ -207,8 +208,11 @@ const Register = () => {
             >
               Register
             </button>
-            <SocialLogin />
+            
           </form>
+          <SocialLogin />
+          </div>
+          
         </div>
       </section>
     </>

@@ -1,13 +1,28 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
 import useAuth from "../Hooks/useAuth";
+import Loader from './../Utilities/Loader';
+import Swal from "sweetalert2";
 
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
-  const { user } = useAuth();
+  const { user,loading,logout } = useAuth();
   const toggleMenu = () => {
     setIsOpen(!isOpen);
   };
+  const handleLogOut = () => {
+    logout()
+    .then(() => {
+      Swal.fire({
+        position: "top-end",
+        icon: "success",
+        title: "Sign Out Success",
+        showConfirmButton: false,
+        timer: 1500
+      });
+    })
+  }
+  if(loading) return <Loader/>
   const links = (
     <>
       <Link
@@ -36,7 +51,7 @@ const Navbar = () => {
       </Link>
       {user ? (
         <Link
-          to="/logout"
+        onClick={handleLogOut}
           className="my-2 text-gray-700 transition-colors duration-300 transform dark:text-gray-200 hover:text-blue-500 dark:hover:text-blue-400 md:mx-4 md:my-0"
         >
           Sign Out
@@ -122,7 +137,9 @@ const Navbar = () => {
         >
           <div className="flex flex-col md:flex-row md:mx-6">{links}</div>
 
-          <div className="flex justify-center md:block">
+          {
+            user && 
+            <div className="flex justify-center md:block">
             <a
               className="relative text-gray-700 transition-colors duration-300 transform dark:text-gray-200 hover:text-gray-600 dark:hover:text-gray-300"
               href="#"
@@ -136,6 +153,7 @@ const Navbar = () => {
               <span className="absolute top-0 left-0 p-1 text-xs text-white bg-blue-500 rounded-full"></span>
             </a>
           </div>
+          }
         </div>
       </div>
     </nav>
