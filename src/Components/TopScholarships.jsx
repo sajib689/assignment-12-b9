@@ -7,10 +7,11 @@ const TopScholarships = () => {
   const { data: universities = [] } = useQuery({
     queryKey: ["universities "],
     queryFn: async () => {
-      const res = await axiosPublic.get("/universityName");
+      const res = await axiosPublic.get("/university");
       return res.data;
     },
   });
+  console.log(universities)
   return (
     <div className="mt-24 mb-24 max-w-6xl mx-auto">
       <div className="container p-4 mx-auto my-6 space-y-1 text-center">
