@@ -11,7 +11,7 @@ const AuthProvider = ({children}) => {
     const [user, setUser] = useState([])
     const [loading, setLoading] = useState(true)
 
-    const register = (email, password) => {
+    const registerByFiled = (email, password) => {
     setLoading(true)
     return createUserWithEmailAndPassword(auth, email, password)
    
@@ -40,7 +40,7 @@ const AuthProvider = ({children}) => {
     const authInfo = {
         user,
         loading,
-        register,
+        registerByFiled,
         login,
         gitHub,
         google
