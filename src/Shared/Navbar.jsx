@@ -10,11 +10,40 @@ const Navbar = () => {
   const links = (
     <>
       <Link
-      to='/'
+        to="/"
         className="my-2 text-gray-700 transition-colors duration-300 transform dark:text-gray-200 hover:text-blue-500 dark:hover:text-blue-400 md:mx-4 md:my-0"
-       
       >
         Home
+      </Link>
+      <Link
+        to="/allScholarships"
+        className="my-2 text-gray-700 transition-colors duration-300 transform dark:text-gray-200 hover:text-blue-500 dark:hover:text-blue-400 md:mx-4 md:my-0"
+      >
+        All Scholarship
+      </Link>
+      <Link
+        to="/userDashboard"
+        className="my-2 text-gray-700 transition-colors duration-300 transform dark:text-gray-200 hover:text-blue-500 dark:hover:text-blue-400 md:mx-4 md:my-0"
+      >
+        User Dashboard
+      </Link>
+      <Link
+        to="/adminDashboard"
+        className="my-2 text-gray-700 transition-colors duration-300 transform dark:text-gray-200 hover:text-blue-500 dark:hover:text-blue-400 md:mx-4 md:my-0"
+      >
+        Admin Dashboard
+      </Link>
+      <Link
+        to="/login"
+        className="my-2 text-gray-700 transition-colors duration-300 transform dark:text-gray-200 hover:text-blue-500 dark:hover:text-blue-400 md:mx-4 md:my-0"
+      >
+        Sign In
+      </Link>
+      <Link
+        to="/logout"
+        className="my-2 text-gray-700 transition-colors duration-300 transform dark:text-gray-200 hover:text-blue-500 dark:hover:text-blue-400 md:mx-4 md:my-0"
+      >
+        Sign Out
       </Link>
     </>
   );
@@ -79,9 +108,7 @@ const Navbar = () => {
             isOpen ? "translate-x-0 opacity-100" : "opacity-0 -translate-x-full"
           } md:mt-0 md:p-0 md:top-0 md:relative md:bg-transparent md:w-auto md:opacity-100 md:translate-x-0 md:flex md:items-center`}
         >
-          <div className="flex flex-col md:flex-row md:mx-6">
-            {links}
-          </div>
+          <div className="flex flex-col md:flex-row md:mx-6">{links}</div>
 
           <div className="flex justify-center md:block">
             <a
