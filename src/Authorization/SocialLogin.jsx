@@ -1,16 +1,26 @@
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import useAuth from "../Hooks/useAuth";
+import useAxiosPublic from "../Hooks/useAxiosPublic";
 
 const SocialLogin = () => {
   const { google, gitHub } = useAuth();
   const navigate = useNavigate();
   const location = useLocation();
   const from = location.state?.from || "/";
-
+  const axiosPublic = useAxiosPublic()
   const handleGitHub = () => {
     gitHub()
       .then((result) => {
         const user = result.user;
+        axiosPublic.post('/users',{
+          email: user?.email,
+          name: user?.displayName,
+          image: user?.photoURL,
+          role: 'user',
+        })
+        .then(res => {
+          console.log(res.data)
+        })
         if (user) {
           navigate(from);
         }
@@ -24,6 +34,15 @@ const SocialLogin = () => {
     google()
       .then((result) => {
         const user = result.user;
+        axiosPublic.post('/users',{
+          email: user?.email,
+          name: user?.displayName,
+          image: user?.photoURL,
+          role: 'user',
+        })
+        .then(res => {
+          console.log(res.data)
+        })
         if (user) {
           navigate(from);
         }

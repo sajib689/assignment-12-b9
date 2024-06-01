@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
-import axios from 'axios'; // Import axios for making HTTP requests
-import Lottie from 'lottie-react'; // Import Lottie for animations
-import registerr from '../../public/register.json'; // Assuming this is your animation file
+import axios from 'axios'; 
+import Lottie from 'lottie-react'; 
+import registerr from '../../public/register.json';
 import SocialLogin from './SocialLogin';
 import { useLocation, useNavigate } from 'react-router-dom';
 import useAuth from './../Hooks/useAuth';
@@ -53,8 +53,8 @@ const Register = () => {
         })
         axiosPublic.post('/users',{
           email: user?.email,
-          name: user?.displayName,
-          image: user?.photoURL,
+          name: data?.displayName,
+          image: image,
           role: 'user',
         })
         .then(res => {
@@ -206,7 +206,7 @@ const Register = () => {
               type="submit"
               className="self-start px-8 py-3 text-lg rounded focus:ring hover:ring focus:ring-opacity-75 bg-blue-600 text-white focus:ring-blue-600 hover:ring-violet-600"
             >
-              Register
+             Sign Up
             </button>
             
           </form>
