@@ -9,7 +9,7 @@ import toast, { Toaster } from 'react-hot-toast';
 import Swal from 'sweetalert2';
 import { useForm } from 'react-hook-form';
 import { updateProfile } from 'firebase/auth';
-
+import useAxiosPublic from '../Hooks/useAxiosPublic'
 const image_api_key = import.meta.env.VITE_IMAGE_API_KEY;
 const image_url = `https://api.imgbb.com/1/upload?key=${image_api_key}`;
 
@@ -17,7 +17,7 @@ const Register = () => {
   const { registerByFiled, google, gitHub } = useAuth();
   const navigate = useNavigate();
   const location = useLocation();
-
+  const axiosPublic = useAxiosPublic();
   // Register form setup using react-hook-form
   const {
     register,
@@ -50,6 +50,15 @@ const Register = () => {
         updateProfile(user, {
             displayName: data.displayName,
             photoURL: image,
+        })
+        axiosPublic.post('/users',{
+          email: user?.email,
+          name: user?.displayName,
+          image: user?.photoURL,
+          role: 'user',
+        })
+        .then(res => {
+          console.log(res.data)
         })
         if(data) {
             Swal.fire({
