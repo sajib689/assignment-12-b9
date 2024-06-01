@@ -1,16 +1,18 @@
 import { useQuery } from "@tanstack/react-query";
 import useAxiosPublic from "../Hooks/useAxiosPublic";
 import TopScholarShipsCard from "./TopScholarShipsCard";
+import Loader from "../Utilities/Loader";
 
 const TopScholarships = () => {
   const axiosPublic = useAxiosPublic();
-  const { data: universities = [] } = useQuery({
+  const { data: universities = [], isPending } = useQuery({
     queryKey: ["universities "],
     queryFn: async () => {
       const res = await axiosPublic.get("/university");
       return res.data;
     },
   });
+  if(isPending) return <Loader/>
   console.log(universities)
   return (
     <div className="mt-24 mb-24 max-w-6xl mx-auto">
@@ -30,7 +32,7 @@ const TopScholarships = () => {
       </div>
 
       <div className="grid grid-cols md:grid-cols-3 lg:grid-cols-3 gap-6">
-        {universities.map((university) => (
+        {universities?.map((university) => (
           <TopScholarShipsCard
             key={university._id}
             university={university}
