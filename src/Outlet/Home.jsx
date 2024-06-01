@@ -1,5 +1,6 @@
 import BannerSlider from "../Components/BannerSlider";
 import TopScholarships from "../Components/TopScholarships";
+import Contact from './../Components/Contact';
 
 
 const Home = () => {
@@ -7,6 +8,7 @@ const Home = () => {
         <div>
             <BannerSlider/>
             <TopScholarships/>
+            <Contact/>
         </div>
     );
 };

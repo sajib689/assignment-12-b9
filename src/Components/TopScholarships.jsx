@@ -16,7 +16,7 @@ const TopScholarships = () => {
   if(isPending) return <Loader/>
 
   return (
-    <div className="mt-24 mb-24 max-w-6xl mx-auto">
+    <div className="mt-48 mb-24 max-w-6xl mx-auto">
       <div className="container p-4 mx-auto my-6 space-y-1 text-center">
         <span className="text-xs font-semibold tracking-wider uppercase dark:text-violet-600">
           your gateway to scholarships
