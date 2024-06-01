@@ -12,8 +12,9 @@ const TopScholarships = () => {
       return res.data;
     },
   });
+  const filterUniversities = universities.sort((a, b) => a.applicationFees - b.applicationFees)
   if(isPending) return <Loader/>
-  console.log(universities)
+
   return (
     <div className="mt-24 mb-24 max-w-6xl mx-auto">
       <div className="container p-4 mx-auto my-6 space-y-1 text-center">
@@ -32,7 +33,7 @@ const TopScholarships = () => {
       </div>
 
       <div className="grid grid-cols md:grid-cols-3 lg:grid-cols-3 gap-6">
-        {universities?.map((university) => (
+        {filterUniversities.slice(0,6)?.map((university) => (
           <TopScholarShipsCard
             key={university._id}
             university={university}
