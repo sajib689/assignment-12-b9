@@ -5,6 +5,7 @@ import AllScholarShips from "../Components/AllScholarShips";
 import Login from './../Authorization/Login';
 import Register from './../Authorization/Register';
 import ScholarDetails from "../Components/ScholarDetails";
+import Payment from "../Components/Payment";
 
 
 const router = createBrowserRouter([
@@ -18,12 +19,18 @@ const router = createBrowserRouter([
         },
         {
             path: "/allScholarShips",
-            element: <AllScholarShips/>},
+            element: <AllScholarShips/>
+          },
         {
             path: "/scholarShipDetails/:id",
             element: <ScholarDetails/>,
             loader: ({params}) => fetch(`http://localhost:3000/university/${params.id}`)
         
+        },
+        {
+          path: "/payment/:id",
+          element: <Payment/>,
+          loader: ({params}) => fetch(`http://localhost:3000/university/${params.id}`)
         },
         {
             path: "/login",

@@ -1,6 +1,6 @@
 import { Rating } from "primereact/rating";
 import { useState } from "react";
-import { useLoaderData } from "react-router-dom";
+import { Link, useLoaderData } from "react-router-dom";
 import useAxiosPublic from "../Hooks/useAxiosPublic";
 import { useQuery } from "@tanstack/react-query";
 import useAuth from "../Hooks/useAuth";
@@ -85,7 +85,7 @@ const ScholarDetails = () => {
   });
 
   const filterReviews = reviews.filter((review) => review.universityId === _id);
-  console.log(filterReviews);
+
 
   return (
     <>
@@ -120,12 +120,12 @@ const ScholarDetails = () => {
             <p className="dark:text-gray-600">
               Application Fees: ${applicationFees}
             </p>
-            <button
-              type="button"
+            <Link
+             to={`/payment/${_id}`}
               className="self-start btn bg-blue-600 text-white hover:bg-blue-700"
             >
               Apply Scholarship
-            </button>
+            </Link>
           </div>
         </div>
       </div>
