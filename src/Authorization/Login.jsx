@@ -8,15 +8,23 @@ import registerr from "../../public/register.json";
 const Login = () => {
   const navigate = useNavigate();
   const location = useLocation();
-  // Register form setup using react-hook-form
+  // Login form setup using react-hook-form
   const {
-    register,
+    login,
     handleSubmit,
     reset,
     formState: { errors },
   } = useForm();
 
-  const onSubmit = async (data) => {};
+  const onSubmit = async (data) => {
+    login(data.email, data.password)
+    .then(result => {
+      const user = result.user;
+      console.log(user);
+      reset()
+      navigate(location.state ? location.state : '/')
+    })
+  };
   return (
     <>
       <Toaster />
