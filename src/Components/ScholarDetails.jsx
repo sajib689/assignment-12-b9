@@ -38,6 +38,7 @@ const ScholarDetails = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
     const form = e.target;
+    const email = user?.email;
     const reviewer_name = user?.displayName;
     const reviewer_image = user?.photoURL;
     const review_date = new Date();
@@ -45,6 +46,7 @@ const ScholarDetails = () => {
     const reviewer_rating = value;
     const reviewer_comments = form.review.value;
     const reviewsCollection = {
+        email,
       reviewer_name,
       reviewer_image,
       review_date,
@@ -60,7 +62,7 @@ const ScholarDetails = () => {
         form.reset();
         if (res.data) {
           Swal.fire({
-            position: "top-end",
+            position: "top-center",
             icon: "success",
             title: "Review Add Success",
             showConfirmButton: false,
@@ -129,7 +131,7 @@ const ScholarDetails = () => {
       </div>
 
       <div className="grid grid-cols md:grid-cols-2 lg:grid-cols-2 gap-6">
-        <div className="flex flex-col max-w-xl p-8 shadow-sm rounded-xl lg:p-12 dark:bg-gray-50 dark:text-gray-800">
+        <div className="flex flex-col w-[410px] md:w-full lg:w-full md:p-8  shadow-sm rounded-xl lg:p-12 dark:bg-gray-50 dark:text-gray-800">
           <form
             onSubmit={handleSubmit}
             className="flex flex-col items-center w-full"
@@ -144,11 +146,13 @@ const ScholarDetails = () => {
                   value={value}
                   onChange={(e) => setValue(e.value)}
                   cancel={false}
+                  required
                 />
               </div>
             </div>
             <div className="flex flex-col w-full">
               <textarea
+              required
                 name="review"
                 rows="3"
                 placeholder="Message..."
