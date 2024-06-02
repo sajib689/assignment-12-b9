@@ -1,30 +1,49 @@
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import SocialLogin from "./SocialLogin";
 import { useForm } from "react-hook-form";
-import { Toaster } from "react-hot-toast";
+import toast, { Toaster } from "react-hot-toast";
 import Lottie from "lottie-react";
 import registerr from "../../public/register.json";
+import useAuth from "../Hooks/useAuth";
+import Loader from "./../Utilities/Loader";
+import { useState } from "react";
 
 const Login = () => {
   const navigate = useNavigate();
   const location = useLocation();
+  const { login } = useAuth();
+  const [err, setErr] = useState("");
   // Login form setup using react-hook-form
   const {
-    login,
     handleSubmit,
     reset,
+    register,
     formState: { errors },
   } = useForm();
 
   const onSubmit = async (data) => {
     login(data.email, data.password)
-    .then(result => {
-      const user = result.user;
-      console.log(user);
-      reset()
-      navigate(location.state ? location.state : '/')
-    })
+      .then((result) => {
+        const user = result.user;
+        console.log(user);
+        reset();
+        navigate(location.state ? location.state : "/");
+      })
+      .catch((err) => {
+        console.log(err.code);
+        switch (err.code) {
+          case "auth/invalid-credential":
+            toast.error("Email is invalid");
+            break;
+          case "auth/wrong-password":
+            toast.error("Invalid password");
+            break;
+          default:
+            toast.error("An unexpected error occurred. Please try again.");
+        }
+      });
   };
+  // if(loading) return <Loader/>
   return (
     <>
       <Toaster />
@@ -86,7 +105,7 @@ const Login = () => {
             <p className="px-6 text-sm text-start dark:text-gray-600">
               Don't have an account yet?
               <Link
-                to='/register'
+                to="/register"
                 className="hover:underline dark:text-violet-600"
               >
                 Sign up
