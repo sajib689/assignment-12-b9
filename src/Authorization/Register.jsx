@@ -3,7 +3,7 @@ import axios from 'axios';
 import Lottie from 'lottie-react'; 
 import registerr from '../../public/register.json';
 import SocialLogin from './SocialLogin';
-import { useLocation, useNavigate } from 'react-router-dom';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 import useAuth from './../Hooks/useAuth';
 import toast, { Toaster } from 'react-hot-toast';
 import Swal from 'sweetalert2';
@@ -211,6 +211,12 @@ const Register = () => {
             
           </form>
           <SocialLogin />
+          <p className="text-xs text-start sm:px-4 dark:text-gray-600">
+        Already have an account?
+        <Link to="/login" className="underline dark:text-gray-800">
+          Sign up
+        </Link>
+      </p>
           </div>
           
         </div>

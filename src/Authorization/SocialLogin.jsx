@@ -88,12 +88,7 @@ const SocialLogin = () => {
           </svg>
         </button>
       </div>
-      <p className="text-xs text-start sm:px-4 dark:text-gray-600">
-        Already have an account?
-        <Link to="/login" className="underline dark:text-gray-800">
-          Sign up
-        </Link>
-      </p>
+      
     </div>
   );
 };
