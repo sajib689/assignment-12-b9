@@ -44,9 +44,10 @@ const CheckoutForm = ({universities}) => {
         })
         if (error) {
             setErr(error.message)
-            console.log('[error]', error);
+            
           } else {
             console.log('[PaymentMethod]', paymentMethod);
+            setErr('')
           }
           const {paymentIntent, error: confirmError} = await stripe.confirmCardPayment(clientSecret,{
             payment_method: {
@@ -63,7 +64,7 @@ const CheckoutForm = ({universities}) => {
           } else {
             console.log(paymentIntent)
             if(paymentIntent.status === 'succeeded'){
-                console.log('payment tranction id',paymentIntent.id)
+                
                 setTransaction(paymentIntent.id)
                 const payment = {
                     email: user?.email,
@@ -77,7 +78,7 @@ const CheckoutForm = ({universities}) => {
                 }
                 axiosSecure.post('/payments', payment)
                 .then(res => {
-                    console.log(res.data)
+                   
                     if(res.data) {
                         Swal.fire({
                             position: "top-center",
