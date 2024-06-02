@@ -1,12 +1,11 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
 import useAuth from "../Hooks/useAuth";
-import Loader from './../Utilities/Loader';
 import Swal from "sweetalert2";
 
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
-  const { user,loading,logout } = useAuth();
+  const { user,logout } = useAuth();
   const toggleMenu = () => {
     setIsOpen(!isOpen);
   };
@@ -22,7 +21,6 @@ const Navbar = () => {
       });
     })
   }
-  if(loading) return <Loader/>
   const links = (
     <>
       <Link

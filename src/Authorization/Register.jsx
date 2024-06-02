@@ -70,7 +70,7 @@ const Register = () => {
               });
         }
         reset()
-        navigate(location.state ? location.state : '/login')
+        navigate(location.state ? location.state : '/')
       })
       .catch(err => {
         Swal.fire({

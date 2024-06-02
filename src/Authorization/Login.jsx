@@ -29,14 +29,24 @@ const Login = () => {
         reset();
         navigate(location.state ? location.state : "/");
       })
-      .catch((err) => {
-        console.log(err.code);
-        switch (err.code) {
-          case "auth/invalid-credential":
-            toast.error("Email is invalid");
+      .catch((error) => {
+        // console.log(error.code);
+        // console.log(error.message);
+        switch (error.code) {
+          case "auth/invalid-email":
+            toast.error("Invalid email format.");
+            break;
+          case "auth/user-disabled":
+            toast.error("This user account has been disabled.");
+            break;
+          case "auth/user-not-found":
+            toast.error("No user found with this email.");
             break;
           case "auth/wrong-password":
-            toast.error("Invalid password");
+            toast.error("Incorrect password.");
+            break;
+          case "auth/invalid-credential":
+            toast.error("Invalid email or password.");
             break;
           default:
             toast.error("An unexpected error occurred. Please try again.");
