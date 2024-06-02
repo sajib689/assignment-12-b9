@@ -6,6 +6,7 @@ import Login from './../Authorization/Login';
 import Register from './../Authorization/Register';
 import ScholarDetails from "../Components/ScholarDetails";
 import Payment from "../Components/Payment";
+import ApplicationForm from "../Components/ApplicationForm";
 
 
 const router = createBrowserRouter([
@@ -30,6 +31,11 @@ const router = createBrowserRouter([
         {
           path: "/payment/:id",
           element: <Payment/>,
+          loader: ({params}) => fetch(`http://localhost:3000/university/${params.id}`)
+        },
+        {
+          path: "/application/:id",
+          element: <ApplicationForm/>,
           loader: ({params}) => fetch(`http://localhost:3000/university/${params.id}`)
         },
         {

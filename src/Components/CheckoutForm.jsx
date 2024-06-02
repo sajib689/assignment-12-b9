@@ -2,6 +2,8 @@ import { CardElement, useElements, useStripe } from "@stripe/react-stripe-js";
 import { useEffect, useState } from "react";
 import useAxiosSecure from "../Hooks/useAxiosSecure";
 import useAuth from "../Hooks/useAuth";
+import Swal from "sweetalert2";
+import { useNavigate } from "react-router-dom";
 
 
 const CheckoutForm = ({universities}) => {
@@ -14,6 +16,7 @@ const CheckoutForm = ({universities}) => {
     const {user} = useAuth()
     const [clientSecret, setClientSecret] = useState('')
     const [transaction, setTransaction ] = useState('')
+    const navigate = useNavigate()
     useEffect(() => {
         if(applicationFees > 0) {
         axiosSecure.post('/create-payment-intent',{
@@ -59,7 +62,7 @@ const CheckoutForm = ({universities}) => {
             console.log(confirmError)
           } else {
             console.log(paymentIntent)
-            if(paymentIntent === "succeeded"){
+            if(paymentIntent.status === 'succeeded'){
                 console.log('payment tranction id',paymentIntent.id)
                 setTransaction(paymentIntent.id)
                 const payment = {
@@ -72,6 +75,21 @@ const CheckoutForm = ({universities}) => {
                     universityName: universityName,
                     status: 'pending'
                 }
+                axiosSecure.post('/payments', payment)
+                .then(res => {
+                    console.log(res.data)
+                    if(res.data) {
+                        Swal.fire({
+                            position: "top-center",
+                            icon: "success",
+                            title: "Payment Success",
+                            showConfirmButton: false,
+                            timer: 1500
+                          });
+                    }
+                    navigate(`/application/${_id}`)
+                    
+                })
             }
           }
 
