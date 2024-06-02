@@ -12,7 +12,6 @@ const Login = () => {
   const navigate = useNavigate();
   const location = useLocation();
   const { login } = useAuth();
-  const [err, setErr] = useState("");
   // Login form setup using react-hook-form
   const {
     handleSubmit,
