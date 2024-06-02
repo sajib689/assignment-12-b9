@@ -28,9 +28,8 @@ const ReviewCard = ({review}) => {
             </div>
         </div>
         <div className="p-4 space-y-2 text-sm dark:text-gray-600">
-            <p>Vivamus sit amet turpis leo. Praesent varius eleifend elit, eu dictum lectus consequat vitae. Etiam ut dolor id justo fringilla finibus.</p>
-            <p>Donec eget ultricies diam, eu molestie arcu. Etiam nec lacus eu mauris cursus venenatis. Maecenas gravida urna vitae accumsan feugiat. Vestibulum commodo, ante sit urna purus rutrum sem.</p>
-        </div>
+            <p>{reviewer_comments}</p>
+            </div>
     </div>
     );
 };

@@ -10,7 +10,7 @@ import { Swiper, SwiperSlide } from "swiper/react";
 import "swiper/css";
 import "swiper/css/grid";
 import "swiper/css/pagination";
-import { Grid, Pagination } from "swiper/modules";
+import { Autoplay, Grid, Pagination } from "swiper/modules";
 import ReviewCard from "./ReviewCard";
 import Swal from "sweetalert2";
 
@@ -177,7 +177,11 @@ const ScholarDetails = () => {
             pagination={{
               clickable: true,
             }}
-            modules={[Grid, Pagination]}
+            autoplay={{
+                delay: 2500,
+                disableOnInteraction: false,
+              }}
+            modules={[Autoplay,Grid, Pagination]}
             className="mySwiper"
           >
             {filterReviews.map((review) => (
