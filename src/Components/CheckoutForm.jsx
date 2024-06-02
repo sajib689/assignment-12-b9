@@ -5,7 +5,7 @@ import useAuth from "../Hooks/useAuth";
 
 
 const CheckoutForm = ({universities}) => {
-    const {_id,applicationFees} = universities
+    const {_id,applicationFees,universityName} = universities
     console.log(_id)
     const elements = useElements()
     const stripe = useStripe()
@@ -13,6 +13,7 @@ const CheckoutForm = ({universities}) => {
     const axiosSecure = useAxiosSecure()
     const {user} = useAuth()
     const [clientSecret, setClientSecret] = useState('')
+    const [transaction, setTransaction ] = useState('')
     useEffect(() => {
         if(applicationFees > 0) {
         axiosSecure.post('/create-payment-intent',{
@@ -58,6 +59,20 @@ const CheckoutForm = ({universities}) => {
             console.log(confirmError)
           } else {
             console.log(paymentIntent)
+            if(paymentIntent === "succeeded"){
+                console.log('payment tranction id',paymentIntent.id)
+                setTransaction(paymentIntent.id)
+                const payment = {
+                    email: user?.email,
+                    name: user?.displayName,
+                    transactionId: paymentIntent.id,
+                    price: applicationFees,
+                    date: new Date(),
+                    universityId: _id,
+                    universityName: universityName,
+                    status: 'pending'
+                }
+            }
           }
 
     }
