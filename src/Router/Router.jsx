@@ -22,7 +22,7 @@ const router = createBrowserRouter([
         {
             path: "/scholarShipDetails/:id",
             element: <ScholarDetails/>,
-            loader: ({params}) => fetch(`http://localhost:3000/allScholarShips/${params.id}`)
+            loader: ({params}) => fetch(`http://localhost:3000/university/${params.id}`)
         
         },
         {
