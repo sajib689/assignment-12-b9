@@ -1,6 +1,7 @@
 import { CardElement, useElements, useStripe } from "@stripe/react-stripe-js";
 import { useEffect, useState } from "react";
 import useAxiosSecure from "../Hooks/useAxiosSecure";
+import useAuth from "../Hooks/useAuth";
 
 
 const CheckoutForm = ({universities}) => {
@@ -10,11 +11,16 @@ const CheckoutForm = ({universities}) => {
     const stripe = useStripe()
     const [err, setErr] = useState('')
     const axiosSecure = useAxiosSecure()
+    const {user} = useAuth()
+    const [clientSecret, setClientSecret] = useState('')
     useEffect(() => {
         if(applicationFees > 0) {
-        axiosSecure.post('/create-payment-intent')
+        axiosSecure.post('/create-payment-intent',{
+            price: parseInt(applicationFees)
+        })
         .then(res => {
-            console.log(res.data)
+            console.log(res.data.clientSecret)
+            setClientSecret(res.data.clientSecret)
         })
         }
     },[axiosSecure,applicationFees])
@@ -38,7 +44,21 @@ const CheckoutForm = ({universities}) => {
           } else {
             console.log('[PaymentMethod]', paymentMethod);
           }
-          
+          const {paymentIntent, error: confirmError} = await stripe.confirmCardPayment(clientSecret,{
+            payment_method: {
+                card: card,
+                billing_details: {
+                    name: `${user?.displayName}` || 'batpar',
+                    email: `${user?.email}` || 'batpar',
+                }
+            }
+          }) 
+          if(confirmError) {
+            setErr(confirmError.message)
+            console.log(confirmError)
+          } else {
+            console.log(paymentIntent)
+          }
 
     }
     return (
