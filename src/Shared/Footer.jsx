@@ -1,4 +1,4 @@
-import React from 'react';
+
 import { Link } from 'react-router-dom';
 
 const Footer = () => {
@@ -11,7 +11,7 @@ const Footer = () => {
               <Link to="/">
               <img
               className="w-auto h-12 sm:h-12"
-              src="https://i.ibb.co/SB4qLFw/logo.png"
+              src="https://i.ibb.co/8cDCM5f/SCHOLARHUBSf2.png"
               alt=""
             />
               </Link>
