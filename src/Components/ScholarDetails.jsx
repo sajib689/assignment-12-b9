@@ -2,12 +2,12 @@ import { Rating } from "primereact/rating";
 import { useState } from "react";
 import { useLoaderData } from "react-router-dom";
 import useAxiosPublic from "../Hooks/useAxiosPublic";
+import { useQuery } from "@tanstack/react-query";
 
 const ScholarDetails = () => {
   const scholarUniversity = useLoaderData();
   const [value, setValue] = useState(1);
   const axiosPublic = useAxiosPublic();
-
   const {
     _id,
     universityImage,
@@ -39,7 +39,15 @@ const ScholarDetails = () => {
         console.error(err);
       });
   };
-
+  const {data: reviews = []} = useQuery({
+    queryKey: ['reviews'],
+    queryFn: async () => {
+        const res = await axiosPublic.get('/reviews')
+        return res.data
+    }
+  })
+  const filterReviews = reviews.filter(review => review.universityId === _id)
+  console.log(filterReviews)
   return (
     <>
       <div className="container mx-auto space-y-12 mt-12 mb-24">
