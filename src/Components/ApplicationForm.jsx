@@ -51,7 +51,11 @@ const ApplicationForm = () => {
         ...formData,
         photo: photoUrl,
       };
-      console.log(submissionData);
+      
+      axiosPublic.post('/applications',submissionData)
+      .then(res => {
+        console.log(res.data);
+      })
       // Submit your form data to the server here
     } catch (error) {
       console.error('Error uploading photo:', error);
