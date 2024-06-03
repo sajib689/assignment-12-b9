@@ -1,6 +1,8 @@
 import { useState } from 'react';
 import useAuth from '../Hooks/useAuth';
 import useAxiosPublic from '../Hooks/useAxiosPublic';
+import { useLoaderData } from 'react-router-dom';
+import Swal from 'sweetalert2';
 
 const photo_Api = import.meta.env.VITE_IMAGE_API_KEY;
 const image_host_url = `https://api.imgbb.com/1/upload?key=${photo_Api}`;
@@ -8,6 +10,7 @@ const image_host_url = `https://api.imgbb.com/1/upload?key=${photo_Api}`;
 const ApplicationForm = () => {
   const { user } = useAuth();
   const axiosPublic = useAxiosPublic();
+  const university = useLoaderData()
   const [formData, setFormData] = useState({
     phoneNumber: '',
     photo: null,
@@ -55,8 +58,17 @@ const ApplicationForm = () => {
       axiosPublic.post('/applications',submissionData)
       .then(res => {
         console.log(res.data);
+        if(res.data) {
+          Swal.fire({
+            position: "top-end",
+            icon: "success",
+            title: "Your Application Submitted",
+            showConfirmButton: false,
+            timer: 1500
+          });
+        }
       })
-      // Submit your form data to the server here
+   
     } catch (error) {
       console.error('Error uploading photo:', error);
     }
@@ -193,7 +205,7 @@ const ApplicationForm = () => {
           <input
             type="text"
             name="universityName"
-            value={user.universityName} 
+            value={university?.universityName} 
             className="w-full p-2 border border-gray-300 rounded bg-gray-200 cursor-not-allowed"
             readOnly
           />
@@ -203,7 +215,7 @@ const ApplicationForm = () => {
           <input
             type="text"
             name="scholarshipCategory"
-            value={user.scholarshipCategory} 
+            value={university?.scholarshipCategory} 
             className="w-full p-2 border border-gray-300 rounded bg-gray-200 cursor-not-allowed"
             readOnly
           />
@@ -213,7 +225,7 @@ const ApplicationForm = () => {
           <input
             type="text"
             name="subjectCategory"
-            value={user.subjectCategory} 
+            value={university?.subjectName} 
             className="w-full p-2 border border-gray-300 rounded bg-gray-200 cursor-not-allowed"
             readOnly
           />
