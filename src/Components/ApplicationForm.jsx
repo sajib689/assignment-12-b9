@@ -1,8 +1,13 @@
 import { useState } from 'react';
 import useAuth from '../Hooks/useAuth';
+import useAxiosPublic from '../Hooks/useAxiosPublic';
+
+const photo_Api = import.meta.env.VITE_IMAGE_API_KEY;
+const image_host_url = `https://api.imgbb.com/1/upload?key=${photo_Api}`;
 
 const ApplicationForm = () => {
   const { user } = useAuth();
+  const axiosPublic = useAxiosPublic();
   const [formData, setFormData] = useState({
     phoneNumber: '',
     photo: null,
@@ -35,10 +40,22 @@ const ApplicationForm = () => {
     }
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    // Handle form submission logic here
-    console.log(formData);
+    try {
+      const formPhoto = new FormData();
+      formPhoto.append('image', formData.photo);
+      const response = await axiosPublic.post(image_host_url, formPhoto);
+      const photoUrl = response.data.data.url;
+      const submissionData = {
+        ...formData,
+        photo: photoUrl,
+      };
+      console.log(submissionData);
+      // Submit your form data to the server here
+    } catch (error) {
+      console.error('Error uploading photo:', error);
+    }
   };
 
   return (
@@ -134,80 +151,78 @@ const ApplicationForm = () => {
           <input
             type="text"
             name="sscResult"
-            value={
-                formData.sscResult}
-                onChange={handleChange}
-                className="w-full p-2 border border-gray-300 rounded"
-                required
-              />
-            </div>
-            <div>
-              <label className="block mb-2 text-sm font-medium">HSC Result</label>
-              <input
-                type="text"
-                name="hscResult"
-                value={formData.hscResult}
-                onChange={handleChange}
-                className="w-full p-2 border border-gray-300 rounded"
-                required
-              />
-            </div>
-            <div>
-              <label className="block mb-2 text-sm font-medium">Study Gap</label>
-              <select
-                name="studyGap"
-                value={formData.studyGap}
-                onChange={handleChange}
-                className="w-full p-2 border border-gray-300 rounded"
-              >
-                <option value="" disabled>Select Study Gap</option>
-                <option value="none">None</option>
-                <option value="1 year">1 Year</option>
-                <option value="2 years">2 Years</option>
-                <option value="3 years">3 Years</option>
-                <option value="4+ years">4+ Years</option>
-              </select>
-            </div>
-            <div>
-              <label className="block mb-2 text-sm font-medium">University Name</label>
-              <input
-                type="text"
-                name="universityName"
-                value={user.universityName} // Assuming the university name is stored in user data
-                className="w-full p-2 border border-gray-300 rounded bg-gray-200 cursor-not-allowed"
-                readOnly
-              />
-            </div>
-            <div>
-              <label className="block mb-2 text-sm font-medium">Scholarship Category</label>
-              <input
-                type="text"
-                name="scholarshipCategory"
-                value={user.scholarshipCategory} // Assuming the scholarship category is stored in user data
-                className="w-full p-2 border border-gray-300 rounded bg-gray-200 cursor-not-allowed"
-                readOnly
-              />
-            </div>
-            <div>
-              <label className="block mb-2 text-sm font-medium">Subject Category</label>
-              <input
-                type="text"
-                name="subjectCategory"
-                value={user.subjectCategory} // Assuming the subject category is stored in user data
-                className="w-full p-2 border border-gray-300 rounded bg-gray-200 cursor-not-allowed"
-                readOnly
-              />
-            </div>
-            <button
-              type="submit"
-              className="w-full p-2 bg-blue-600 text-white rounded hover:bg-blue-700"
-            >
-              Submit / Apply
-            </button>
-          </form>
+            value={formData.sscResult}
+            onChange={handleChange}
+            className="w-full p-2 border border-gray-300 rounded"
+            required
+          />
         </div>
-      );
-    };
-    
-    export default ApplicationForm;
-    
+        <div>
+          <label className="block mb-2 text-sm font-medium">HSC Result</label>
+          <input
+            type="text"
+            name="hscResult"
+            value={formData.hscResult}
+            onChange={handleChange}
+            className="w-full p-2 border border-gray-300 rounded"
+            required
+          />
+        </div>
+        <div>
+          <label className="block mb-2 text-sm font-medium">Study Gap</label>
+          <select
+            name="studyGap"
+            value={formData.studyGap}
+            onChange={handleChange}
+            className="w-full p-2 border border-gray-300 rounded"
+          >
+            <option value="" disabled>Select Study Gap</option>
+            <option value="none">None</option>
+            <option value="1 year">1 Year</option>
+            <option value="2 years">2 Years</option>
+            <option value="3 years">3 Years</option>
+            <option value="4+ years">4+ Years</option>
+          </select>
+        </div>
+        <div>
+          <label className="block mb-2 text-sm font-medium">University Name</label>
+          <input
+            type="text"
+            name="universityName"
+            value={user.universityName} 
+            className="w-full p-2 border border-gray-300 rounded bg-gray-200 cursor-not-allowed"
+            readOnly
+          />
+        </div>
+        <div>
+          <label className="block mb-2 text-sm font-medium">Scholarship Category</label>
+          <input
+            type="text"
+            name="scholarshipCategory"
+            value={user.scholarshipCategory} 
+            className="w-full p-2 border border-gray-300 rounded bg-gray-200 cursor-not-allowed"
+            readOnly
+          />
+        </div>
+        <div>
+          <label className="block mb-2 text-sm font-medium">Subject Category</label>
+          <input
+            type="text"
+            name="subjectCategory"
+            value={user.subjectCategory} 
+            className="w-full p-2 border border-gray-300 rounded bg-gray-200 cursor-not-allowed"
+            readOnly
+          />
+        </div>
+        <button
+          type="submit"
+          className="w-full p-2 bg-blue-600 text-white rounded hover:bg-blue-700"
+        >
+           Apply
+        </button>
+      </form>
+    </div>
+  );
+};
+
+export default ApplicationForm;
