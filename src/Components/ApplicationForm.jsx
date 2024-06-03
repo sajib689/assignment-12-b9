@@ -53,11 +53,15 @@ const ApplicationForm = () => {
       const submissionData = {
         ...formData,
         photo: photoUrl,
+        name: user?.displayName,
+        userId: user?._id,
+        email: user?.email,
+        ScholarshipId: university?._id,
+        date: new Date().toLocaleDateString(),
       };
       
       axiosPublic.post('/applications',submissionData)
       .then(res => {
-        console.log(res.data);
         if(res.data) {
           Swal.fire({
             position: "top-end",
