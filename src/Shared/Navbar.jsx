@@ -137,7 +137,7 @@ const Navbar = () => {
 
           {
             user && 
-            <div className="flex justify-center md:block">
+            <div className="flex justify-center items-center md:block">
             <a
               className="relative text-gray-700 transition-colors duration-300 transform dark:text-gray-200 hover:text-gray-600 dark:hover:text-gray-300"
               href="#"
@@ -150,6 +150,9 @@ const Navbar = () => {
 
               <span className="absolute top-0 left-0 p-1 text-xs text-white bg-blue-500 rounded-full"></span>
             </a>
+            <div>
+            <p>{user?.displayName}</p>
+            </div>
           </div>
           }
         </div>
