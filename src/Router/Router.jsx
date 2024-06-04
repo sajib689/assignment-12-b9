@@ -13,6 +13,7 @@ import UserApplications from "../Components/Users/UserApplications";
 import UserProfile from "../Components/Users/UserProfile";
 import UserReview from "../Components/Users/UserReview";
 import UpdateReview from "../Components/Users/UpdateReview";
+import UpdateApplication from "../Components/Users/UpdateApplication";
 
 
 
@@ -78,6 +79,11 @@ const router = createBrowserRouter([
           path: "updatereview/:id",
           element: <UpdateReview/>,
           loader: ({params}) => fetch(`http://localhost:3000/reviews/${params.id}`)
+        },
+        {
+          path: "updateapplication/:id",
+          element: <UpdateApplication/>,
+          loader: ({params}) => fetch(`http://localhost:3000/applications/${params.id}`)
         },
       ]
     },

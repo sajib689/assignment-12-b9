@@ -1,6 +1,7 @@
 
 import Swal from 'sweetalert2';
 import useAxiosPublic from './../../Hooks/useAxiosPublic';
+import { Link } from 'react-router-dom';
 
 const UserApplicationCard = ({ application, index,refetch }) => {
 
@@ -61,6 +62,9 @@ const UserApplicationCard = ({ application, index,refetch }) => {
       </td>
       <th>
         <button onClick={() => handleDeleteApplication(_id)} className="btn btn-warning btn-xs">Delete</button>
+      </th>
+      <th>
+        <Link to={`/userDashboard/updateapplication/${_id}`} className="btn btn-warning btn-xs">Update</Link>
       </th>
     </tr>
   );
