@@ -30,6 +30,7 @@ const UserApplications = () => {
                 <th>
                 No
                 </th>
+                <th>University Name</th>
                 <th>University Address</th>
                 <th>Application Feedback</th>
                 <th>Subject Category</th>
@@ -37,7 +38,7 @@ const UserApplications = () => {
                 <th>Application Fees</th>
                 <th>Service Charge</th>
                 <th>Application Status</th>
-                <th></th>
+                <th>Actions</th>
               </tr>
             </thead>
             <tbody>

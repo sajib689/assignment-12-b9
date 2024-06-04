@@ -1,21 +1,28 @@
 const UserApplicationCard = ({ application, index }) => {
-    const {_id} = application
+  const {
+    _id,
+    university_name,
+    university_address,
+    subject_category,
+    applied_degree,
+    application_fees,
+    service_charge,
+  } = application;
   return (
     <tr>
       <th>
         <label>{index + 1}</label>
       </th>
-      <td>123 University Ave, City, Country</td>
+      <td>{university_name}</td>
+      
+      <td>{university_address}</td>
       <td>
-        <div className="flex items-center gap-3">
-          <div className="font-bold">Good application</div>
-          <div className="text-sm opacity-50">No issues found</div>
-        </div>
+       Good Application
       </td>
-      <td>Computer Science</td>
-      <td>Bachelor of Science</td>
-      <td>$100</td>
-      <td>$20</td>
+      <td>{subject_category}</td>
+      <td>{applied_degree}</td>
+      <td>${application_fees}</td>
+      <td>${service_charge}</td>
       <td>
         <span className="badge badge-info badge-sm">Pending</span>
       </td>
