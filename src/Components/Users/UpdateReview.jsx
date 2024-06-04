@@ -25,10 +25,12 @@ const UpdateReview = () => {
             
             if (res.data) {
                 Swal.fire({
-                  title: "Deleted!",
-                  text: "Your review has been deleted.",
-                  icon: "success",
-                });
+                    position: "top-center",
+                    icon: "success",
+                    title: "Your review updated success",
+                    showConfirmButton: false,
+                    timer: 1500
+                  });
               }
             navigate('/userDashboard/userReview')
         })
