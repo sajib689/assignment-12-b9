@@ -7,12 +7,14 @@ import Register from './../Authorization/Register';
 import ScholarDetails from "../Components/ScholarDetails";
 import Payment from "../Components/Payment";
 import ApplicationForm from "../Components/ApplicationForm";
+import Error from "../Components/Error";
 
 
 const router = createBrowserRouter([
     {
       path: "/",
       element: <Main/>,
+      errorElement: <Error/>,
       children: [
         {
             path: "/",

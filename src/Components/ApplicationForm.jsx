@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import useAuth from '../Hooks/useAuth';
 import useAxiosPublic from '../Hooks/useAxiosPublic';
-import { useLoaderData } from 'react-router-dom';
+import { useLoaderData, useNavigate } from 'react-router-dom';
 import Swal from 'sweetalert2';
 
 const photo_Api = import.meta.env.VITE_IMAGE_API_KEY;
@@ -12,6 +12,7 @@ const ApplicationForm = () => {
   const [users, setUsers] = useState([])
   const axiosPublic = useAxiosPublic();
   const university = useLoaderData()
+  const navigate = useNavigate()
   axiosPublic.get('/users')
   .then(res => {
     setUsers(res.data)
@@ -77,6 +78,7 @@ const ApplicationForm = () => {
             timer: 1500
           });
         }
+        
       })
    
     } catch (error) {
