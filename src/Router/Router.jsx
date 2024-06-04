@@ -8,7 +8,8 @@ import ScholarDetails from "../Components/ScholarDetails";
 import Payment from "../Components/Payment";
 import ApplicationForm from "../Components/ApplicationForm";
 import Error from "../Components/Error";
-import userDashboard from './../Components/userDashboard';
+import UserDashboard from "../Components/UserDashboard";
+
 
 
 const router = createBrowserRouter([
@@ -43,7 +44,7 @@ const router = createBrowserRouter([
         },
         {
           path: "/userDashboard",
-          element: <userDashboard/>
+          element: <UserDashboard/>
         },
         {
             path: "/login",
