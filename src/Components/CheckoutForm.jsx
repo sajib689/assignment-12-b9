@@ -96,7 +96,9 @@ const CheckoutForm = ({universities}) => {
 
     }
     return (
-        <form onSubmit={handleSubmit} className="max-w-[300px] mt-48 mx-auto h-screen">
+      <div>
+          
+         <form onSubmit={handleSubmit} className="max-w-[300px] mt-48 mx-auto h-screen">
         <CardElement
           options={{
             style: {
@@ -118,6 +120,9 @@ const CheckoutForm = ({universities}) => {
         </button>
         <p className="text-red-200">{err}</p>
       </form>
+      </div>
+    
+       
     );
 };
 

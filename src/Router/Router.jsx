@@ -9,6 +9,7 @@ import Payment from "../Components/Payment";
 import ApplicationForm from "../Components/ApplicationForm";
 import Error from "../Components/Error";
 import UserDashboard from "../Components/UserDashboard";
+import UserApplications from "../Components/Users/UserApplications";
 
 
 
@@ -42,10 +43,8 @@ const router = createBrowserRouter([
           element: <ApplicationForm/>,
           loader: ({params}) => fetch(`http://localhost:3000/university/${params.id}`)
         },
-        {
-          path: "/userDashboard",
-          element: <UserDashboard/>
-        },
+      
+       
         {
             path: "/login",
             element: <Login/>,
@@ -53,6 +52,16 @@ const router = createBrowserRouter([
         {
             path: "/register",
             element: <Register/>,
+        },
+      ]
+    },
+    {
+      path: "/userDashboard",
+      element: <UserDashboard/>,
+      children: [
+        {
+          path: "userApplication",
+          element: <UserApplications/>
         },
       ]
     },
