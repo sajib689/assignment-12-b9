@@ -1,5 +1,6 @@
 import Swal from "sweetalert2";
 import useAxiosPublic from "../../Hooks/useAxiosPublic";
+import { Link } from "react-router-dom";
 
 const UserReviewCard = ({ review, index,refetch }) => {
   const axiosPublic = useAxiosPublic();
@@ -36,6 +37,7 @@ const UserReviewCard = ({ review, index,refetch }) => {
       }
     });
   };
+ 
   return (
     <tr>
       <th>
@@ -49,9 +51,9 @@ const UserReviewCard = ({ review, index,refetch }) => {
       <td>{date}</td>
 
       <th>
-        <button className="btn btn-success text-white cursor-pointer">
+        <Link to={`/userDashboard/updatereview/${_id}`} className="btn btn-success text-white cursor-pointer">
           Update
-        </button>
+        </Link>
       </th>
       <th>
         <button

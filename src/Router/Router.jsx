@@ -12,6 +12,7 @@ import UserDashboard from "../Components/UserDashboard";
 import UserApplications from "../Components/Users/UserApplications";
 import UserProfile from "../Components/Users/UserProfile";
 import UserReview from "../Components/Users/UserReview";
+import UpdateReview from "../Components/Users/UpdateReview";
 
 
 
@@ -72,6 +73,11 @@ const router = createBrowserRouter([
         {
           path: "userReview",
           element: <UserReview/>
+        },
+        {
+          path: "updatereview/:id",
+          element: <UpdateReview/>,
+          loader: ({params}) => fetch(`http://localhost:3000/reviews/${params.id}`)
         },
       ]
     },
