@@ -9,8 +9,13 @@ const image_host_url = `https://api.imgbb.com/1/upload?key=${photo_Api}`;
 
 const ApplicationForm = () => {
   const { user } = useAuth();
+  const [users, setUsers] = useState([])
   const axiosPublic = useAxiosPublic();
   const university = useLoaderData()
+  axiosPublic.get('/users')
+  .then(res => {
+    setUsers(res.data)
+  })
   const [formData, setFormData] = useState({
     phoneNumber: '',
     photo: null,
@@ -54,7 +59,7 @@ const ApplicationForm = () => {
         ...formData,
         photo: photoUrl,
         name: user?.displayName,
-        userId: user?._id,
+        userId: users?._id,
         email: user?.email,
         ScholarshipId: university?._id,
         date: new Date().toLocaleDateString(),
@@ -62,9 +67,10 @@ const ApplicationForm = () => {
       
       axiosPublic.post('/applications',submissionData)
       .then(res => {
+        console.log(res.data)
         if(res.data) {
           Swal.fire({
-            position: "top-end",
+            position: "top-center",
             icon: "success",
             title: "Your Application Submitted",
             showConfirmButton: false,
