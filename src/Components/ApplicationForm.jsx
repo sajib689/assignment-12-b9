@@ -10,6 +10,7 @@ const image_host_url = `https://api.imgbb.com/1/upload?key=${photo_Api}`;
 const ApplicationForm = () => {
   const { user } = useAuth();
   const [users, setUsers] = useState([])
+  const userId = users?.map(user => user._id)
   const axiosPublic = useAxiosPublic();
   const university = useLoaderData()
   const navigate = useNavigate()
@@ -60,9 +61,15 @@ const ApplicationForm = () => {
         ...formData,
         photo: photoUrl,
         name: user?.displayName,
-        userId: users?._id,
+        userId: userId,
         email: user?.email,
-        ScholarshipId: university?._id,
+        scholarshipId: university?._id,
+        university_name: university?.universityName,
+        university_address: university?.country,
+        subject_category: university?.subjectName,
+        applied_degree: university?.scholarshipCategory,
+        application_fees: university?.applicationFees,
+        service_charge: university?.serviceCharge,
         date: new Date().toLocaleDateString(),
       };
       

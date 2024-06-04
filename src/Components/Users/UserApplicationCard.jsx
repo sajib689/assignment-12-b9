@@ -1,4 +1,5 @@
 const UserApplicationCard = ({ application, index }) => {
+    const {_id} = application
   return (
     <tr>
       <th>
