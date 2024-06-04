@@ -44,6 +44,7 @@ const ScholarDetails = () => {
     const review_date = new Date();
     const universityId = _id;
     const reviewer_rating = value;
+    const scholarship_name = scholarshipCategory;
     const reviewer_comments = form.review.value;
     const reviewsCollection = {
         email,
@@ -54,6 +55,8 @@ const ScholarDetails = () => {
       universityName,
       reviewer_rating,
       reviewer_comments,
+      scholarship_name
+
     };
 
     axiosPublic
