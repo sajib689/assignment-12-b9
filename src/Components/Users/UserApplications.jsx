@@ -28,9 +28,7 @@ const UserApplications = () => {
             <thead>
               <tr>
                 <th>
-                  <label>
-                    <input type="checkbox" className="checkbox" />
-                  </label>
+                No
                 </th>
                 <th>University Address</th>
                 <th>Application Feedback</th>
@@ -44,27 +42,15 @@ const UserApplications = () => {
             </thead>
             <tbody>
               {/* row 1 */}
-              {applications.map((application) => (
+              {applications.map((application,index) => (
                 <UserApplicationCard
                   key={application._id}
+                  index={index}
                   application={application}
                 ></UserApplicationCard>
               ))}
             </tbody>
-            {/* foot */}
-            <tfoot>
-              <tr>
-                <th></th>
-                <th>University Address</th>
-                <th>Application Feedback</th>
-                <th>Subject Category</th>
-                <th>Applied Degree</th>
-                <th>Application Fees</th>
-                <th>Service Charge</th>
-                <th>Application Status</th>
-                <th></th>
-              </tr>
-            </tfoot>
+           
           </table>
         </div>
       </div>
