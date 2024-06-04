@@ -55,7 +55,7 @@ const UserApplicationCard = ({ application, index }) => {
       <td>${application_fees}</td>
       <td>${service_charge}</td>
       <td>
-        <span className="badge badge-info badge-sm">Pending</span>
+        <span className="badge badge-info badge-sm text-white">processing</span>
       </td>
       <th>
         <button onClick={() => handleUpdateApplication(_id)} className="btn btn-ghost btn-xs">Delete</button>
