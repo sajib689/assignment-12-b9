@@ -8,7 +8,7 @@ const UserReview = () => {
     const axiosPublic = useAxiosPublic()
     const {user} = useAuth()
 
-    const {data: reviews = []} = useQuery({
+    const {data: reviews = [],refetch} = useQuery({
         queryKey: ['reviews'],
         queryFn: async () => {
             const res = await axiosPublic.get(`/reviews?${user?.email}`)
@@ -29,15 +29,13 @@ const UserReview = () => {
                   <th>
                   No
                   </th>
+                  
                   <th>University Name</th>
-                  <th>University Address</th>
-                  <th>Application Feedback</th>
-                  <th>Subject Category</th>
+                  <th>Review Comments</th>
                   <th>Applied Degree</th>
-                  <th>Application Fees</th>
-                  <th>Service Charge</th>
-                  <th>Application Status</th>
-                  <th>Actions</th>
+                  <th>Review Date</th>
+                  <th>Update</th>
+                  <th>Delete</th>
                 </tr>
               </thead>
               <tbody>
@@ -47,6 +45,7 @@ const UserReview = () => {
                     key={review._id}
                     index={index}
                     review={review}
+                    refetch={refetch}
                   ></UserReviewCard>
                 ))}
               </tbody>
