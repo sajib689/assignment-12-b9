@@ -10,6 +10,8 @@ import ApplicationForm from "../Components/ApplicationForm";
 import Error from "../Components/Error";
 import UserDashboard from "../Components/UserDashboard";
 import UserApplications from "../Components/Users/UserApplications";
+import UserProfile from "../Components/Users/UserProfile";
+import UserReview from "../Components/Users/UserReview";
 
 
 
@@ -62,6 +64,14 @@ const router = createBrowserRouter([
         {
           path: "userApplication",
           element: <UserApplications/>
+        },
+        {
+          path: "userProfile",
+          element: <UserProfile/>
+        },
+        {
+          path: "userReview",
+          element: <UserReview/>
         },
       ]
     },

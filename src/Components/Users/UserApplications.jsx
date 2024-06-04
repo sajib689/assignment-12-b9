@@ -17,7 +17,7 @@ const UserApplications = () => {
 
   if (isPending) return <Loader />;
   return (
-    <div>
+    <div className="mt-12">
       <h1 className="text-3xl font-bold mt-5">
         All Applications: {applications.length}
       </h1>

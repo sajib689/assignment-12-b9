@@ -3,25 +3,18 @@ import useAuth from "../../Hooks/useAuth";
 import { IoMdMenu } from "react-icons/io";
 import { useState } from "react";
 
-const UserMenu = ({ onDrawerToggle }) => {
+const UserMenu = ({ onToggle }) => {
   const { user } = useAuth();
-  const [isDrawerOpen, setIsDrawerOpen] = useState(false);
-
-  const handleDrawerChange = (event) => {
-    const isOpen = event.target.checked;
-    setIsDrawerOpen(isOpen);
-    onDrawerToggle(isOpen);
-  };
 
   return (
     <div className="drawer">
-      <input id="my-drawer" type="checkbox" className="drawer-toggle" onChange={handleDrawerChange} />
+      <input id="my-drawer" type="checkbox" className="drawer-toggle" onChange={onToggle} />
       <div className="drawer-content">
         <label htmlFor="my-drawer" className="btn drawer-button">
           <IoMdMenu />
         </label>
       </div>
-      <div className={`drawer-side ${isDrawerOpen ? 'drawer-open' : ''}`}>
+      <div className="drawer-side">
         <label htmlFor="my-drawer" className="drawer-overlay" aria-label="close sidebar"></label>
         <ul className="menu p-4 w-80 min-h-full bg-base-100 text-base-content">
           <aside className="flex flex-col w-full h-screen px-4 py-8 overflow-y-auto bg-white border-r rtl:border-r-0 rtl:border-l dark:bg-gray-900 dark:border-gray-700">
@@ -86,7 +79,7 @@ const UserMenu = ({ onDrawerToggle }) => {
                       strokeLinejoin="round"
                     />
                   </svg>
-                  <span className="mx-4 font-medium">My Profile</span>
+                  <Link to="/userDashboard/userProfile" className="mx-4 font-medium">My Profile</Link>
                 </Link>
 
                 <Link
@@ -118,7 +111,7 @@ const UserMenu = ({ onDrawerToggle }) => {
                 </Link>
 
                 <Link
-                  to="/userDashboard/userReviews"
+                  to="/userDashboard/userReview"
                   className="flex items-center px-4 py-2 mt-5 text-gray-600 transition-colors duration-300 transform rounded-lg dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-800 dark:hover:text-gray-200 hover:text-gray-700"
                 >
                   <svg
