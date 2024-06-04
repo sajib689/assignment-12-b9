@@ -7,7 +7,7 @@ import UserApplicationCard from "./UserApplicationCard";
 const UserApplications = () => {
   const { user } = useAuth();
   const axiosPublic = useAxiosPublic();
-  const { data: applications = [], isPending } = useQuery({
+  const { data: applications = [], isPending,refetch } = useQuery({
     queryKey: ["applications"],
     queryFn: async () => {
       const res = await axiosPublic.get(`/applications?email=${user?.email}`);
@@ -48,6 +48,7 @@ const UserApplications = () => {
                   key={application._id}
                   index={index}
                   application={application}
+                  refetch={refetch}
                 ></UserApplicationCard>
               ))}
             </tbody>

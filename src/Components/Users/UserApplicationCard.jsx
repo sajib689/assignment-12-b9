@@ -2,8 +2,8 @@
 import Swal from 'sweetalert2';
 import useAxiosPublic from './../../Hooks/useAxiosPublic';
 
-const UserApplicationCard = ({ application, index }) => {
-  const axiosPublic = useAxiosPublic()
+const UserApplicationCard = ({ application, index,refetch }) => {
+
   const {
     _id,
     university_name,
@@ -13,7 +13,8 @@ const UserApplicationCard = ({ application, index }) => {
     application_fees,
     service_charge,
   } = application;
-  const handleUpdateApplication = _id => {
+  const axiosPublic = useAxiosPublic()
+  const handleDeleteApplication = _id => {
     Swal.fire({
       title: "Are you sure?",
       text: "You won't be able to revert this!",
@@ -26,6 +27,7 @@ const UserApplicationCard = ({ application, index }) => {
       if (result.isConfirmed) {
         axiosPublic.delete(`/applications/${_id}`)
         .then(res => {
+          refetch()
          if(res.data){
           Swal.fire({
             title: "Deleted!",
@@ -58,7 +60,7 @@ const UserApplicationCard = ({ application, index }) => {
         <span className="badge badge-info badge-sm text-white">processing</span>
       </td>
       <th>
-        <button onClick={() => handleUpdateApplication(_id)} className="btn btn-ghost btn-xs">Delete</button>
+        <button onClick={() => handleDeleteApplication(_id)} className="btn btn-warning btn-xs">Delete</button>
       </th>
     </tr>
   );
