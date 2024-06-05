@@ -2,19 +2,23 @@ import { useQuery } from "@tanstack/react-query";
 import useAuth from "../../Hooks/useAuth";
 import useAxiosPublic from "../../Hooks/useAxiosPublic";
 import UserReviewCard from "./UserReviewCard";
+import Loader from "../../Utilities/Loader";
+import NodataFound from "../../Utilities/NodataFound";
 
 
 const UserReview = () => {
     const axiosPublic = useAxiosPublic()
     const {user} = useAuth()
 
-    const {data: reviews = [],refetch} = useQuery({
+    const {data: reviews = [],refetch,isPending} = useQuery({
         queryKey: ['reviews'],
         queryFn: async () => {
             const res = await axiosPublic.get(`/reviews?${user?.email}`)
             return res.data
         }
     })
+    if(isPending) return <Loader/>
+    if(reviews.length === 0) return <NodataFound/>
     return (
         <div className="mt-12">
         <h1 className="text-3xl font-bold mt-5">

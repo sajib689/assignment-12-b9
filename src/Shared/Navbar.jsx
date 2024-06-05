@@ -1,11 +1,19 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import useAuth from "../Hooks/useAuth";
 import Swal from "sweetalert2";
+import useAxiosPublic from "../Hooks/useAxiosPublic";
 
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
   const { user,logout } = useAuth();
+  const [users, setUsers] = useState([]);
+  const axiosPublic = useAxiosPublic()
+  useEffect(() => {
+    axiosPublic.get("/users").then((res) => {
+      setUsers(res.data);
+    });
+  }, [axiosPublic]);
   const toggleMenu = () => {
     setIsOpen(!isOpen);
   };
@@ -21,6 +29,7 @@ const Navbar = () => {
       });
     })
   }
+  const userRole = users.map(user => user.role === 'user')
   const links = (
     <>
       <Link
@@ -35,12 +44,16 @@ const Navbar = () => {
       >
         All Scholarship
       </Link>
-      <Link
+      {
+        userRole &&
+        <Link
         to="/userDashboard/userApplication"
         className="my-2 text-gray-700 transition-colors duration-300 transform dark:text-gray-200 hover:text-blue-500 dark:hover:text-blue-400 md:mx-4 md:my-0"
       >
         User Dashboard
       </Link>
+      }
+      
       <Link
         to="/adminDashboard"
         className="my-2 text-gray-700 transition-colors duration-300 transform dark:text-gray-200 hover:text-blue-500 dark:hover:text-blue-400 md:mx-4 md:my-0"

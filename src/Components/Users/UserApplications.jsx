@@ -3,6 +3,7 @@ import useAuth from "../../Hooks/useAuth";
 import useAxiosPublic from "../../Hooks/useAxiosPublic";
 import Loader from "../../Utilities/Loader";
 import UserApplicationCard from "./UserApplicationCard";
+import NodataFound from "../../Utilities/NodataFound";
 
 const UserApplications = () => {
   const { user } = useAuth();
@@ -16,6 +17,7 @@ const UserApplications = () => {
   });
 
   if (isPending) return <Loader />;
+  if(applications.length === 0) return <NodataFound/>
   return (
     <div className="mt-12">
       <h1 className="text-3xl font-bold mt-5">
@@ -38,7 +40,9 @@ const UserApplications = () => {
                 <th>Application Fees</th>
                 <th>Service Charge</th>
                 <th>Application Status</th>
-                <th>Actions</th>
+                <th>Delete</th>
+                <th>Update</th>
+                
               </tr>
             </thead>
             <tbody>

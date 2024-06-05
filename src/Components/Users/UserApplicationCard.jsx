@@ -61,10 +61,10 @@ const UserApplicationCard = ({ application, index,refetch }) => {
         <span className="badge badge-info badge-sm text-white">processing</span>
       </td>
       <th>
-        <button onClick={() => handleDeleteApplication(_id)} className="btn btn-warning btn-xs">Delete</button>
+        <button onClick={() => handleDeleteApplication(_id)} className="btn btn-warning btn-xs text-white">Delete</button>
       </th>
       <th>
-        <Link to={`/userDashboard/updateapplication/${_id}`} className="btn btn-warning btn-xs">Update</Link>
+        <Link to={`/userDashboard/updateapplication/${_id}`} className="btn btn-warning btn-xs text-white">Update</Link>
       </th>
     </tr>
   );
