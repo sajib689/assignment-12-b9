@@ -3,17 +3,26 @@ import useAuth from "../../Hooks/useAuth";
 import { IoMdMenu } from "react-icons/io";
 import { useEffect, useState } from "react";
 import useAxiosPublic from "../../Hooks/useAxiosPublic";
+import useAxiosSecure from "../../Hooks/useAxiosSecure";
+import { useQuery } from "@tanstack/react-query";
 
 const UserMenu = () => {
   const { user } = useAuth();
   const [users, setUsers] = useState([]);
   const axiosPublic = useAxiosPublic();
+  const axiosSecure = useAxiosSecure()
   useEffect(() => {
     axiosPublic.get("/users").then((res) => {
       setUsers(res.data);
     });
   }, [axiosPublic]);
-  const userRole = users.map((user) => user.role === "user");
+  const {data: role = []} = useQuery({
+    queryKey: ['role'],
+    queryFn: async () => {
+      const res = await axiosSecure.get(`/users/role/${user?.email}`)
+      return res.data
+    }
+  })
   const links = (
     <>
       <li>
@@ -23,7 +32,7 @@ const UserMenu = () => {
         <Link to="/userDashboard/userProfile">My Profile</Link>
       </li>
       {
-        userRole === 'user' && 
+        role.role === 'user' && 
        <>
        <li>
         <Link to="/userDashboard/userApplication">My Applications</Link>
@@ -33,7 +42,10 @@ const UserMenu = () => {
       </li>
        </>
       }
-      <li>
+      {
+        role.role === 'admin' &&
+        <>
+        <li>
         <Link to="/userDashboard/userApplication">Add Scholarship</Link>
       </li>
       <li>
@@ -48,6 +60,8 @@ const UserMenu = () => {
       <li>
         <Link to="/userDashboard/userReview">Manage Review</Link>
       </li>
+        </>
+      }
     </>
   );
   return (

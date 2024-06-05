@@ -3,12 +3,15 @@ import { Link } from "react-router-dom";
 import useAuth from "../Hooks/useAuth";
 import Swal from "sweetalert2";
 import useAxiosPublic from "../Hooks/useAxiosPublic";
+import { useQuery } from "@tanstack/react-query";
+import useAxiosSecure from './../Hooks/useAxiosSecure';
 
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
   const { user,logout } = useAuth();
   const [users, setUsers] = useState([]);
   const axiosPublic = useAxiosPublic()
+  const axiosSecure = useAxiosSecure()
   useEffect(() => {
     axiosPublic.get("/users").then((res) => {
       setUsers(res.data);
@@ -29,8 +32,15 @@ const Navbar = () => {
       });
     })
   }
-  const userRole = users.map(user => user.role === 'user')
-  const isAdmin = true
+
+  const {data: role = []} = useQuery({
+    queryKey: ['role'],
+    queryFn: async () => {
+      const res = await axiosSecure.get(`/users/role/${user?.email}`)
+      return res.data
+    }
+  })
+
   const links = (
     <>
       <Link
@@ -46,7 +56,7 @@ const Navbar = () => {
         All Scholarship
       </Link>
       {
-        userRole &&
+        role.role === 'user' &&
         <Link
         to="/userDashboard/userApplication"
         className="my-2 text-gray-700 transition-colors duration-300 transform dark:text-gray-200 hover:text-blue-500 dark:hover:text-blue-400 md:mx-4 md:my-0"
@@ -56,9 +66,9 @@ const Navbar = () => {
       }
       
       {
-        isAdmin &&
+        role.role === 'admin' &&
         <Link
-        to="/adminDashboard"
+        to="/userDashboard/userApplication"
         className="my-2 text-gray-700 transition-colors duration-300 transform dark:text-gray-200 hover:text-blue-500 dark:hover:text-blue-400 md:mx-4 md:my-0"
       >
         Admin Dashboard
