@@ -30,6 +30,7 @@ const Navbar = () => {
     })
   }
   const userRole = users.map(user => user.role === 'user')
+  const isAdmin = true
   const links = (
     <>
       <Link
@@ -54,12 +55,15 @@ const Navbar = () => {
       </Link>
       }
       
-      <Link
+      {
+        isAdmin &&
+        <Link
         to="/adminDashboard"
         className="my-2 text-gray-700 transition-colors duration-300 transform dark:text-gray-200 hover:text-blue-500 dark:hover:text-blue-400 md:mx-4 md:my-0"
       >
         Admin Dashboard
       </Link>
+      }
       {user ? (
         <Link
         onClick={handleLogOut}

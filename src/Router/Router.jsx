@@ -14,6 +14,7 @@ import UserProfile from "../Components/Users/UserProfile";
 import UserReview from "../Components/Users/UserReview";
 import UpdateReview from "../Components/Users/UpdateReview";
 import UpdateApplication from "../Components/Users/UpdateApplication";
+import ManageUsers from "../Components/Admin/ManageUsers";
 
 
 
@@ -63,6 +64,7 @@ const router = createBrowserRouter([
       path: "/userDashboard",
       element: <UserDashboard/>,
       children: [
+        // users route
         {
           path: "userApplication",
           element: <UserApplications/>
@@ -84,6 +86,11 @@ const router = createBrowserRouter([
           path: "updateapplication/:id",
           element: <UpdateApplication/>,
           loader: ({params}) => fetch(`http://localhost:3000/applications/${params.id}`)
+        },
+        // admin routes
+        {
+          path: "manageusers",
+          element: <ManageUsers/>
         },
       ]
     },
