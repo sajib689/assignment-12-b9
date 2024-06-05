@@ -5,13 +5,15 @@ import Swal from "sweetalert2";
 import useAxiosPublic from "../Hooks/useAxiosPublic";
 import { useQuery } from "@tanstack/react-query";
 import useAxiosSecure from './../Hooks/useAxiosSecure';
+import Loader from './../Utilities/Loader';
 
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
-  const { user,logout } = useAuth();
+  const { user,logout,loading } = useAuth();
   const [users, setUsers] = useState([]);
   const axiosPublic = useAxiosPublic()
   const axiosSecure = useAxiosSecure()
+  const email = user?.email
   useEffect(() => {
     axiosPublic.get("/users").then((res) => {
       setUsers(res.data);
@@ -33,14 +35,15 @@ const Navbar = () => {
     })
   }
 
-  const {data: role = []} = useQuery({
-    queryKey: ['role'],
+  const {data: roleType = [],isPending} = useQuery({
+    queryKey: ['roleType',email],
     queryFn: async () => {
-      const res = await axiosSecure.get(`/users/role/${user?.email}`)
+      const res = await axiosSecure.get(`/users/role/${email}`)
       return res.data
     }
   })
-
+  // if( isPending) return <Loader/>
+console.log(roleType.role)
   const links = (
     <>
       <Link
@@ -56,7 +59,7 @@ const Navbar = () => {
         All Scholarship
       </Link>
       {
-        role.role === 'user' &&
+        roleType.role === 'user' &&
         <Link
         to="/userDashboard/userApplication"
         className="my-2 text-gray-700 transition-colors duration-300 transform dark:text-gray-200 hover:text-blue-500 dark:hover:text-blue-400 md:mx-4 md:my-0"
@@ -66,7 +69,7 @@ const Navbar = () => {
       }
       
       {
-        role.role === 'admin' &&
+        roleType.role === 'admin' &&
         <Link
         to="/userDashboard/userApplication"
         className="my-2 text-gray-700 transition-colors duration-300 transform dark:text-gray-200 hover:text-blue-500 dark:hover:text-blue-400 md:mx-4 md:my-0"

@@ -17,7 +17,7 @@ const UserMenu = () => {
     });
   }, [axiosPublic]);
   const {data: role = []} = useQuery({
-    queryKey: ['role'],
+    queryKey: ['role',user?.email],
     queryFn: async () => {
       const res = await axiosSecure.get(`/users/role/${user?.email}`)
       return res.data

@@ -88,8 +88,9 @@ const ManageUsersCard = ({ userAll, index, refetch }) => {
           onChange={handleRoleChange} 
         >
           <option disabled>Select Role</option>
-          <option value="moderator">Moderator</option>
           <option value="admin">Admin</option>
+          <option value="moderator">Moderator</option>
+          <option value="user">User</option>
         </select>
       </td>
     </tr>
