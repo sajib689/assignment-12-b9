@@ -15,6 +15,7 @@ import UserReview from "../Components/Users/UserReview";
 import UpdateReview from "../Components/Users/UpdateReview";
 import UpdateApplication from "../Components/Users/UpdateApplication";
 import ManageUsers from "../Components/Admin/ManageUsers";
+import AddUniversity from "../Components/Admin/AddUniversity";
 
 
 
@@ -91,6 +92,10 @@ const router = createBrowserRouter([
         {
           path: "manageusers",
           element: <ManageUsers/>
+        },
+        {
+          path: "addscholarships",
+          element: <AddUniversity/>
         },
       ]
     },

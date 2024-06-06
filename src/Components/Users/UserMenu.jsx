@@ -46,7 +46,7 @@ const UserMenu = () => {
         role.role === 'admin' &&
         <>
         <li>
-        <Link to="/userDashboard/userApplication">Add Scholarship</Link>
+        <Link to="/userDashboard/addscholarships">Add Scholarship</Link>
       </li>
       <li>
         <Link to="/userDashboard/userReview">Manage Scholarship</Link>

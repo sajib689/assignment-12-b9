@@ -5,7 +5,7 @@ import useAxiosSecure from "../../Hooks/useAxiosSecure";
 const ManageUsersCard = ({ userAll, index, refetch }) => {
   const { _id, name, email, role, image } = userAll;
   const axiosSecure = useAxiosSecure();
-  const [selectedRole, setSelectedRole] = useState(role); 
+  const [selectedRole, setSelectedRole] = useState(role);
 
   // Handle delete user
   const handleDeleteUser = (_id) => {
@@ -36,7 +36,7 @@ const ManageUsersCard = ({ userAll, index, refetch }) => {
   // Handle role change
   const handleRoleChange = (e) => {
     const newRole = e.target.value;
-    setSelectedRole(newRole); 
+    setSelectedRole(newRole);
 
     Swal.fire({
       title: "Are you sure?",
@@ -48,18 +48,20 @@ const ManageUsersCard = ({ userAll, index, refetch }) => {
       confirmButtonText: "Yes, change it!",
     }).then((result) => {
       if (result.isConfirmed) {
-        axiosSecure.patch(`/users/${_id}/role`, { role: newRole }).then((res) => {
-          refetch();
-          if (res.data) {
-            Swal.fire({
-              title: "Updated!",
-              text: `The user role has been changed to ${newRole}.`,
-              icon: "success",
-            });
-          }
-        });
+        axiosSecure
+          .patch(`/users/${_id}/role`, { role: newRole })
+          .then((res) => {
+            refetch();
+            if (res.data) {
+              Swal.fire({
+                title: "Updated!",
+                text: `The user role has been changed to ${newRole}.`,
+                icon: "success",
+              });
+            }
+          });
       } else {
-        setSelectedRole(role); 
+        setSelectedRole(role);
       }
     });
   };
@@ -84,8 +86,8 @@ const ManageUsersCard = ({ userAll, index, refetch }) => {
         <select
           name="role"
           className="select select-bordered w-xl max-w-xs"
-          value={selectedRole} 
-          onChange={handleRoleChange} 
+          value={selectedRole}
+          onChange={handleRoleChange}
         >
           <option disabled>Select Role</option>
           <option value="admin">Admin</option>
