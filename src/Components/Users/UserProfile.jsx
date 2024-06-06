@@ -1,7 +1,17 @@
+import { useQuery } from "@tanstack/react-query";
 import useAuth from "../../Hooks/useAuth";
+import useAxiosSecure from "../../Hooks/useAxiosSecure";
 
 const UserProfile = () => {
+  const axiosSecure = useAxiosSecure()
     const {user} = useAuth()
+    const {data: role = []} = useQuery({
+      queryKey: ['role',user?.email],
+      queryFn: async () => {
+        const res = await axiosSecure.get(`/users/role/${user?.email}`)
+        return res.data
+      }
+    })
   return (
     <div className="flex flex-col justify-center mx-auto mt-24 max-w-xs p-6 shadow-md rounded-xl sm:px-12 dark:bg-gray-50 dark:text-gray-800">
       <img
@@ -14,6 +24,16 @@ const UserProfile = () => {
           <h2 className="text-xl font-semibold sm:text-2xl">{user?.displayName}</h2>
           <p className="px-5 text-xs sm:text-base dark:text-gray-600">
             {user?.email}
+          </p>
+          <p className="px-5 text-xs sm:text-base dark:text-gray-600">
+            {
+              role.role === 'admin' &&
+              'Role: Admin'
+            }
+            {
+               role.role === 'moderator' &&
+               'Role: Moderator'
+            }
           </p>
         </div>
         <div className="flex justify-center pt-2 space-x-4 align-center">

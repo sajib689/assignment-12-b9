@@ -1,19 +1,20 @@
-import { useQuery } from "@tanstack/react-query";
-import useAuth from "../../Hooks/useAuth";
-import useAxiosPublic from "../../Hooks/useAxiosPublic";
-import UserReviewCard from "./UserReviewCard";
-import Loader from "../../Utilities/Loader";
-import NodataFound from "../../Utilities/NodataFound";
+
+import { useQuery } from '@tanstack/react-query';
+import useAuth from '../../Hooks/useAuth';
+import useAxiosPublic from '../../Hooks/useAxiosPublic';
+import UserReviewCard from './../Users/UserReviewCard';
+import Loader from '../../Utilities/Loader';
+import NodataFound from '../../Utilities/NodataFound';
 
 
-const UserReview = () => {
+const ManageReview = () => {
     const axiosPublic = useAxiosPublic()
     const {user} = useAuth()
 
     const {data: reviews = [],refetch,isPending} = useQuery({
         queryKey: ['reviews'],
         queryFn: async () => {
-            const res = await axiosPublic.get(`/reviews?email=${user?.email}`)
+            const res = await axiosPublic.get(`/reviews`)
             return res.data
         }
     })
@@ -61,4 +62,4 @@ const UserReview = () => {
     );
 };
 
-export default UserReview;
+export default ManageReview;

@@ -17,6 +17,7 @@ import UpdateApplication from "../Components/Users/UpdateApplication";
 import ManageUsers from "../Components/Admin/ManageUsers";
 import AddUniversity from "../Components/Admin/AddUniversity";
 import ManageApplicatins from "../Components/Admin/ManageApplicatins";
+import ManageReview from "../Components/Admin/ManageReview";
 
 
 
@@ -101,6 +102,10 @@ const router = createBrowserRouter([
         {
           path: "manageApplicatins",
           element: <ManageApplicatins/>
+        },
+        {
+          path: "managereview",
+          element: <ManageReview/>
         },
       ]
     },
