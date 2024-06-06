@@ -18,6 +18,7 @@ const UserApplicationCard = ({ application, index, refetch }) => {
   const {
     _id,
     university_name,
+    status,
     university_address,
     subject_category,
     applied_degree,
@@ -49,7 +50,14 @@ const UserApplicationCard = ({ application, index, refetch }) => {
       }
     });
   };
-  console.log(role.role)
+ const handleUpdateStatus = _id => {
+  axiosSecure.patch(`/applications/${_id}`,{
+    status: 'approved'
+  })
+  .then(res => {
+   console.log(res.data)
+  })
+ }
   return (
     <tr>
       <th>
@@ -67,13 +75,13 @@ const UserApplicationCard = ({ application, index, refetch }) => {
         {
           role.role === 'user' &&
           <button className="badge badge-info badge-sm text-white">
-          processing
+          {status}
         </button>
         }
         {
           role.role === 'admin' &&
-          <button className="badge badge-info badge-sm text-white">
-          pending
+          <button onClick={() => handleUpdateStatus(_id)} className="badge badge-info badge-sm text-white">
+         {status}
         </button>
         }
       </td>
