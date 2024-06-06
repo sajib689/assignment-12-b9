@@ -1,5 +1,5 @@
-
-import useAxiosSecure from '../../Hooks/useAxiosSecure';
+import Swal from "sweetalert2";
+import useAxiosSecure from "../../Hooks/useAxiosSecure";
 
 const image_api_key = import.meta.env.VITE_IMAGE_API_KEY;
 const image_url = `https://api.imgbb.com/1/upload?key=${image_api_key}`;
@@ -11,19 +11,16 @@ const AddUniversity = () => {
     e.preventDefault();
     const form = e.target;
     const universityImage = form.universityImage.files[0];
-    
     if (!universityImage) {
       console.error("University image file is missing");
       return;
     }
-
     const formData = new FormData();
-    formData.append('image', universityImage);
+    formData.append("image", universityImage);
 
     try {
       const res = await axiosSecure.post(image_url, formData);
-      const image = res.data.data.display_url;
-
+      const universityImage = res.data.data.display_url;
       const universityName = form.universityName.value;
       const scholarshipCategory = form.scholarshipCategory.value;
       const country = form.country.value;
@@ -38,7 +35,7 @@ const AddUniversity = () => {
 
       const application = {
         universityName,
-        image,
+        universityImage,
         scholarshipCategory,
         country,
         city,
@@ -51,7 +48,19 @@ const AddUniversity = () => {
         applicationFees,
       };
 
-      console.log(application);
+      axiosSecure.post('/university',application)
+      .then(res =>{
+        if(res.data){
+            Swal.fire({
+                position: "top-end",
+                icon: "success",
+                title: "Your scholar has been saved",
+                showConfirmButton: false,
+                timer: 1500
+              })
+        }
+        form.reset()
+      })
     } catch (error) {
       console.error("Error uploading image or submitting form data", error);
     }
@@ -156,7 +165,10 @@ const AddUniversity = () => {
         </div>
 
         <div className="mb-4">
-          <label htmlFor="scholarshipDescription" className="block text-gray-700">
+          <label
+            htmlFor="scholarshipDescription"
+            className="block text-gray-700"
+          >
             Scholarship Description:
           </label>
           <textarea
