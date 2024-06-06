@@ -52,13 +52,13 @@ const UserMenu = () => {
         <Link to="/userDashboard/userReview">Manage Scholarship</Link>
       </li>
       <li>
-        <Link to="/userDashboard/userReview">Manage Applied Application</Link>
+        <Link to="/userDashboard/manageApplicatins">Manage Applied Application</Link>
       </li>
       <li>
         <Link to="/userDashboard/manageusers">Manage Users</Link>
       </li>
       <li>
-        <Link to="/userDashboard/userReview">Manage Review</Link>
+        <Link to="/userDashboard/">Manage Review</Link>
       </li>
         </>
       }
