@@ -63,7 +63,7 @@ const ApplicationForm = () => {
         name: user?.displayName,
         userId: userId,
         email: user?.email,
-        status: 'processing',
+        status: 'pending',
         scholarshipId: university?._id,
         university_name: university?.universityName,
         university_address: university?.country,

@@ -49,7 +49,7 @@ const UserMenu = () => {
         <Link to="/userDashboard/addscholarships">Add Scholarship</Link>
       </li>
       <li>
-        <Link to="/userDashboard/">Manage Scholarship</Link>
+        <Link to="/userDashboard/managescholar">Manage Scholarship</Link>
       </li>
       <li>
         <Link to="/userDashboard/manageApplicatins">Manage Applied Application</Link>
