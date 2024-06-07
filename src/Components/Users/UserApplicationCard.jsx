@@ -23,6 +23,7 @@ const UserApplicationCard = ({ application, index, refetch }) => {
 
   const {
     _id,
+    scholarshipId,
     university_name,
     status,
     university_address,
@@ -127,7 +128,7 @@ const UserApplicationCard = ({ application, index, refetch }) => {
     const reviewer_name = user?.displayName;
     const reviewer_image = user?.photoURL;
     const review_date = new Date();
-    const universityId = _id;
+    const universityId = scholarshipId;
     const reviewer_rating = value;
     const scholarship_name = application.scholarship_name;
     const reviewer_comments = form.review.value;
@@ -137,7 +138,7 @@ const UserApplicationCard = ({ application, index, refetch }) => {
       reviewer_image,
       review_date,
       universityId,
-      universityName,
+      university_name,
       reviewer_rating,
       reviewer_comments,
       scholarship_name,
@@ -156,6 +157,7 @@ const UserApplicationCard = ({ application, index, refetch }) => {
             timer: 1500,
           });
         }
+        setModal2(false)
         refetch();
       })
       .catch((err) => {

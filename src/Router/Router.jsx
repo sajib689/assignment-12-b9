@@ -71,7 +71,7 @@ const router = createBrowserRouter([
         // users route
         {
           path: "userApplication",
-          element: <UserApplications/>
+          element: <UserApplications/>,
         },
         {
           path: "userProfile",

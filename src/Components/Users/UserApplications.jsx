@@ -8,6 +8,7 @@ import NodataFound from "../../Utilities/NodataFound";
 const UserApplications = () => {
   const { user } = useAuth();
   const axiosPublic = useAxiosPublic();
+  
   const { data: applications = [], isPending,refetch } = useQuery({
     queryKey: ["applications"],
     queryFn: async () => {

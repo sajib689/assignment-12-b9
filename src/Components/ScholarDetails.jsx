@@ -46,7 +46,7 @@ const ScholarDetails = () => {
   });
 
   const filterReviews = reviews.filter((review) => review.universityId === _id);
-
+  console.log(filterReviews)
   return (
     <>
       <div className="container mx-auto space-y-12 mt-12 mb-24">
