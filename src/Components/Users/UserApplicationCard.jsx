@@ -129,6 +129,7 @@ const UserApplicationCard = ({ application, index, refetch }) => {
     const reviewer_image = user?.photoURL;
     const review_date = new Date();
     const universityId = scholarshipId;
+    const applied_degree = applied_degree;
     const reviewer_rating = value;
     const scholarship_name = application.scholarship_name;
     const reviewer_comments = form.review.value;

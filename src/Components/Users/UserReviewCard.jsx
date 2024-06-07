@@ -4,12 +4,14 @@ import { Link } from "react-router-dom";
 
 const UserReviewCard = ({ review, index,refetch }) => {
   const axiosPublic = useAxiosPublic();
+  
   const {
     _id,
-    universityName,
+    university_name,
     scholarship_name,
     reviewer_comments,
     review_date,
+    applied_degree
   } = review;
   const date = new Date(review_date).toLocaleDateString();
   const handleDeleteReview = (_id) => {
@@ -43,26 +45,23 @@ const UserReviewCard = ({ review, index,refetch }) => {
       <th>
         <label>{index + 1}</label>
       </th>
-      <td>{universityName}</td>
-
-      <td>{scholarship_name}</td>
-
+      <td>{university_name}</td>
       <td>{reviewer_comments}</td>
+      <td>{applied_degree}</td>
       <td>{date}</td>
-
-      <th>
+      <td>
         <Link to={`/userDashboard/updatereview/${_id}`} className="btn btn-success text-white cursor-pointer">
           Update
         </Link>
-      </th>
-      <th>
+      </td>
+      <td>
         <button
           onClick={() => handleDeleteReview(_id)}
           className="btn btn-warning text-white cursor-pointer"
         >
           Delete
         </button>
-      </th>
+      </td>
     </tr>
   );
 };
