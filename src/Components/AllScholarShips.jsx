@@ -27,7 +27,7 @@ const AllScholarShips = () => {
     setStoreSearcher(searchValue)
   }
   if (isPending) return <Loader />;
-  console.log(universities)
+  
   return (
     <div>
         <img className="md:h-[60vh] lg:h-[60vh] w-full" src="https://www.news10.com/wp-content/uploads/sites/64/2023/07/64c03fe900ce73.72717550.jpeg?w=2560&h=1440&crop=1" alt="" />
