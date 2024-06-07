@@ -31,7 +31,24 @@ const ManageScholarCard = ({ scholar, refetch, index }) => {
     setDetails(res.data);
     setIsModalOpen2(true);
   };
-  const handleUpdateScholar = (e) => {};
+  const handleUpdateScholar = (e) => {
+    e.preventDefault();
+    const form = e.target
+    const scholarshipName = form.scholarshipName.value
+    const universityName = form.universityName.value
+    const universityImage = form.universityImage.value
+    const country = form.country.value
+    const city = form.city.value
+    const universityWorldRank = form.universityWorldRank.value
+    const subjectName = form.subjectName.value
+    const scholarshipCategory = form.scholarshipCategory.value
+    const degree = form.degree.value
+    const tuitionFees = form.tuitionFees.value
+    const applicationFees = form.applicationFees.value
+    const serviceCharge = form.serviceCharge.value
+    const applicationDeadline = form.applicationDeadline.value
+    const postDate = form.postDate.value
+  };
   const handleDeleteScholar = (_id) => {
     Swal.fire({
       title: "Are you sure?",
