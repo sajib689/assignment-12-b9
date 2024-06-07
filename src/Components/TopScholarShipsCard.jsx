@@ -2,7 +2,7 @@ import { Rating } from "primereact/rating";
 import { Link } from "react-router-dom";
 
 const TopScholarShipsCard = ({ university }) => {
-  const { _id, universityName, universityImage, applicationFees, rating } =
+  const { _id, universityName, universityImage, applicationFees, rating,scholarshipCategory,country,city,applicationDeadline } =
     university;
 
   return (
@@ -13,12 +13,23 @@ const TopScholarShipsCard = ({ university }) => {
       ></div>
 
       <div className="w-56 -mt-10 overflow-hidden bg-white rounded-lg shadow-lg md:w-64 dark:bg-gray-800">
-        <h3 className="py-2 font-bold tracking-wide text-center text-gray-800 uppercase dark:text-white">
+        <h3 className="py-2 font-bold tracking-wide ms-2 text-gray-800 uppercase dark:text-white">
           {universityName}
         </h3>
-        <div className="py-2 text-center">
+        <div>
+        <h3 className="tracking-wide ms-3 text-gray-800 dark:text-white">
+        Category: {scholarshipCategory}
+        </h3>
+        <h3 className=" tracking-wide ms-3 text-gray-800 dark:text-white">
+        Location: {country}, {city}
+        </h3>
+        <h3 className=" tracking-wide ms-3 text-gray-800 dark:text-white">
+        Deadline: {applicationDeadline}
+        </h3>
+        </div>
+        <div className="py-2">
           {rating ? (
-            <div className="flex justify-center items-center">
+            <div className="flex ms-3">
               <Rating className="text-orange-500" value={rating} disabled cancel={false} />
               <span className="ml-2 text-gray-800 dark:text-gray-200">
                 {rating}
