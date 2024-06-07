@@ -10,7 +10,7 @@ const image_api = import.meta.env.VITE_IMAGE_API_KEY;
 const image_hosting_url = `https://api.imgbb.com/1/upload?key=${image_api}`;
 
 const ManageScholarCard = ({ scholar, refetch, index }) => {
-  const { _id, universityName, scholarshipCategory, subjectName, applicationFees } = scholar;
+  const { _id,degree, universityName, scholarshipCategory, subjectName, applicationFees } = scholar;
 
   const [details, setDetails] = useState({});
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -135,6 +135,7 @@ const ManageScholarCard = ({ scholar, refetch, index }) => {
         <td>{scholarshipCategory}</td>
         <td>{universityName}</td>
         <td>{subjectName}</td>
+        <td>{degree}</td>
         <td>${applicationFees}</td>
         <th>
           <button className="btn" onClick={() => handleDetails(_id)}>
