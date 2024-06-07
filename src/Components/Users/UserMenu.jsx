@@ -10,19 +10,19 @@ const UserMenu = () => {
   const { user } = useAuth();
   const [users, setUsers] = useState([]);
   const axiosPublic = useAxiosPublic();
-  const axiosSecure = useAxiosSecure()
+  const axiosSecure = useAxiosSecure();
   useEffect(() => {
     axiosPublic.get("/users").then((res) => {
       setUsers(res.data);
     });
   }, [axiosPublic]);
-  const {data: role = []} = useQuery({
-    queryKey: ['role',user?.email],
+  const { data: role = [] } = useQuery({
+    queryKey: ["role", user?.email],
     queryFn: async () => {
-      const res = await axiosSecure.get(`/users/role/${user?.email}`)
-      return res.data
-    }
-  })
+      const res = await axiosSecure.get(`/users/role/${user?.email}`);
+      return res.data;
+    },
+  });
   const links = (
     <>
       <li>
@@ -31,37 +31,40 @@ const UserMenu = () => {
       <li>
         <Link to="/userDashboard/userProfile">My Profile</Link>
       </li>
-      {
-        role.role === 'user' && 
-       <>
-       <li>
-        <Link to="/userDashboard/userApplication">My Applications</Link>
-      </li>
-      <li>
-        <Link to="/userDashboard/userReview">My Reviews</Link>
-      </li>
-       </>
-      }
-      {
-        role.role === 'admin' &&
+      {role.role === "user" && (
         <>
-        <li>
-        <Link to="/userDashboard/addscholarships">Add Scholarship</Link>
-      </li>
-      <li>
-        <Link to="/userDashboard/managescholar">Manage Scholarship</Link>
-      </li>
-      <li>
-        <Link to="/userDashboard/manageApplicatins">Manage Applied Application</Link>
-      </li>
-      <li>
-        <Link to="/userDashboard/manageusers">Manage Users</Link>
-      </li>
-      <li>
-        <Link to="/userDashboard/managereview">Manage Review</Link>
-      </li>
+          <li>
+            <Link to="/userDashboard/userApplication">My Applications</Link>
+          </li>
+          <li>
+            <Link to="/userDashboard/userReview">My Reviews</Link>
+          </li>
         </>
-      }
+      )}
+      {role.role === "admin" && (
+        <>
+          <li>
+            <Link to="/userDashboard/addscholarships">Add Scholarship</Link>
+          </li>
+          <li>
+            <Link to="/userDashboard/managescholar">Manage Scholarship</Link>
+          </li>
+          <li>
+            <Link to="/userDashboard/manageApplicatins">
+              Manage Applied Application
+            </Link>
+          </li>
+
+          <li>
+            <Link to="/userDashboard/managereview">Manage Review</Link>
+          </li>
+        </>
+      )}
+      {role.role === "admin" && (
+        <li>
+          <Link to="/userDashboard/manageusers">Manage Users</Link>
+        </li>
+      )}
     </>
   );
   return (
