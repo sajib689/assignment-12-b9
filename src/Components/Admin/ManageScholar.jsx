@@ -38,7 +38,7 @@ const ManageScholar = () => {
                   <th>Application Fees</th>
                   <th>Details</th>
                   <th>Delete</th>
-                  <th>Update</th>
+                  <th>Edit</th>
                   
                 </tr>
               </thead>

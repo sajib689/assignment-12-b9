@@ -1,3 +1,4 @@
+import { useState } from "react";
 import Swal from "sweetalert2";
 import useAxiosSecure from "../../Hooks/useAxiosSecure";
 
@@ -6,6 +7,7 @@ const image_url = `https://api.imgbb.com/1/upload?key=${image_api_key}`;
 
 const AddUniversity = () => {
   const axiosSecure = useAxiosSecure();
+  const [loading, setLoading] = useState(false);
 
   const handleAddScholar = async (e) => {
     e.preventDefault();
@@ -15,54 +17,60 @@ const AddUniversity = () => {
       console.error("University image file is missing");
       return;
     }
+
     const formData = new FormData();
     formData.append("image", universityImage);
 
     try {
+      setLoading(true);
       const res = await axiosSecure.post(image_url, formData);
-      const universityImage = res.data.data.display_url;
+      const universityImageURL = res.data.data.display_url;
       const universityName = form.universityName.value;
       const scholarshipCategory = form.scholarshipCategory.value;
       const country = form.country.value;
       const city = form.city.value;
       const applicationDeadline = form.applicationDeadline.value;
       const subjectName = form.subjectName.value;
-      const scholarshipDescription = form.scholarshipDescription.value;
-      const stipend = form.stipend.value;
-      const postDate = form.postDate.value;
+      const scholarshipName = form.scholarshipName.value;
+      const universityWorldRank = form.universityWorldRank.value;
+      const degree = form.degree.value;
+      const tuitionFees = form.tuitionFees.value;
       const serviceCharge = form.serviceCharge.value;
       const applicationFees = form.applicationFees.value;
+      const postDate = form.postDate.value;
+      const postedUserEmail = form.postedUserEmail.value;
 
       const application = {
         universityName,
-        universityImage,
+        universityImage: universityImageURL,
         scholarshipCategory,
         country,
         city,
         applicationDeadline,
         subjectName,
-        scholarshipDescription,
-        stipend,
-        postDate,
+        scholarshipName,
+        universityWorldRank,
+        degree,
+        tuitionFees,
         serviceCharge,
         applicationFees,
+        postDate,
+        postedUserEmail,
       };
 
-      axiosSecure.post('/university',application)
-      .then(res =>{
-        if(res.data){
-            Swal.fire({
-                position: "top-end",
-                icon: "success",
-                title: "Your scholar has been saved",
-                showConfirmButton: false,
-                timer: 1500
-              })
-        }
-        form.reset()
-      })
+      await axiosSecure.post('/university', application);
+      Swal.fire({
+        position: "top-end",
+        icon: "success",
+        title: "Your scholar has been saved",
+        showConfirmButton: false,
+        timer: 1500,
+      });
+      form.reset();
     } catch (error) {
       console.error("Error uploading image or submitting form data", error);
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -72,6 +80,19 @@ const AddUniversity = () => {
         Scholarship Submission Form
       </h1>
       <form onSubmit={handleAddScholar}>
+        <div className="mb-4">
+          <label htmlFor="scholarshipName" className="block text-gray-700">
+            Scholarship Name:
+          </label>
+          <input
+            type="text"
+            id="scholarshipName"
+            name="scholarshipName"
+            className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring focus:ring-indigo-200 focus:border-indigo-300"
+            required
+          />
+        </div>
+
         <div className="mb-4">
           <label htmlFor="universityName" className="block text-gray-700">
             University Name:
@@ -87,7 +108,7 @@ const AddUniversity = () => {
 
         <div className="mb-4">
           <label htmlFor="universityImage" className="block text-gray-700">
-            University Image:
+            University Image/Logo:
           </label>
           <input
             type="file"
@@ -100,21 +121,8 @@ const AddUniversity = () => {
         </div>
 
         <div className="mb-4">
-          <label htmlFor="scholarshipCategory" className="block text-gray-700">
-            Scholarship Category:
-          </label>
-          <input
-            type="text"
-            id="scholarshipCategory"
-            name="scholarshipCategory"
-            className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring focus:ring-indigo-200 focus:border-indigo-300"
-            required
-          />
-        </div>
-
-        <div className="mb-4">
           <label htmlFor="country" className="block text-gray-700">
-            Country:
+            University Country:
           </label>
           <input
             type="text"
@@ -127,12 +135,114 @@ const AddUniversity = () => {
 
         <div className="mb-4">
           <label htmlFor="city" className="block text-gray-700">
-            City:
+            University City:
           </label>
           <input
             type="text"
             id="city"
             name="city"
+            className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring focus:ring-indigo-200 focus:border-indigo-300"
+            required
+          />
+        </div>
+
+        <div className="mb-4">
+          <label htmlFor="universityWorldRank" className="block text-gray-700">
+            University World Rank:
+          </label>
+          <input
+            type="number"
+            id="universityWorldRank"
+            name="universityWorldRank"
+            className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring focus:ring-indigo-200 focus:border-indigo-300"
+            required
+          />
+        </div>
+
+        <div className="mb-4">
+          <label htmlFor="subjectName" className="block text-gray-700">
+            Subject Category:
+          </label>
+          <select
+            id="subjectName"
+            name="subjectName"
+            className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring focus:ring-indigo-200 focus:border-indigo-300"
+            required
+          >
+            <option value="">Select Subject Category</option>
+            <option value="Agriculture">Agriculture</option>
+            <option value="Engineering">Engineering</option>
+            <option value="Doctor">Doctor</option>
+          </select>
+        </div>
+
+        <div className="mb-4">
+          <label htmlFor="scholarshipCategory" className="block text-gray-700">
+            Scholarship Category:
+          </label>
+          <select
+            id="scholarshipCategory"
+            name="scholarshipCategory"
+            className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring focus:ring-indigo-200 focus:border-indigo-300"
+            required
+          >
+            <option value="">Select Scholarship Category</option>
+            <option value="Full fund">Full fund</option>
+            <option value="Partial">Partial</option>
+            <option value="Self-fund">Self-fund</option>
+          </select>
+        </div>
+
+        <div className="mb-4">
+          <label htmlFor="degree" className="block text-gray-700">
+            Degree:
+          </label>
+          <select
+            id="degree"
+            name="degree"
+            className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring focus:ring-indigo-200 focus:border-indigo-300"
+            required
+          >
+            <option value="">Select Degree</option>
+            <option value="Diploma">Diploma</option>
+            <option value="Bachelor">Bachelor</option>
+            <option value="Masters">Masters</option>
+          </select>
+        </div>
+
+        <div className="mb-4">
+          <label htmlFor="tuitionFees" className="block text-gray-700">
+            Tuition Fees (optional):
+          </label>
+          <input
+            type="number"
+            id="tuitionFees"
+            name="tuitionFees"
+            className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring focus:ring-indigo-200 focus:border-indigo-300"
+          />
+        </div>
+
+        <div className="mb-4">
+          <label htmlFor="applicationFees" className="block text-gray-700">
+            Application Fees:
+          </label>
+          <input
+            type="number"
+            id="applicationFees"
+            name="applicationFees"
+            className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring focus:ring-indigo-200 focus:border-indigo-300"
+            required
+          />
+        </div>
+
+        <div className="mb-4">
+          <label htmlFor="serviceCharge" className="block text-gray-700">
+            Service Charge:
+          </label>
+          <input
+            type="number"
+            id="serviceCharge"
+            name="serviceCharge"
             className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring focus:ring-indigo-200 focus:border-indigo-300"
             required
           />
@@ -152,50 +262,8 @@ const AddUniversity = () => {
         </div>
 
         <div className="mb-4">
-          <label htmlFor="subjectName" className="block text-gray-700">
-            Subject Name:
-          </label>
-          <input
-            type="text"
-            id="subjectName"
-            name="subjectName"
-            className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring focus:ring-indigo-200 focus:border-indigo-300"
-            required
-          />
-        </div>
-
-        <div className="mb-4">
-          <label
-            htmlFor="scholarshipDescription"
-            className="block text-gray-700"
-          >
-            Scholarship Description:
-          </label>
-          <textarea
-            id="scholarshipDescription"
-            name="scholarshipDescription"
-            rows="4"
-            className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring focus:ring-indigo-200 focus:border-indigo-300"
-            required
-          ></textarea>
-        </div>
-
-        <div className="mb-4">
-          <label htmlFor="stipend" className="block text-gray-700">
-            Stipend:
-          </label>
-          <input
-            type="text"
-            id="stipend"
-            name="stipend"
-            className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring focus:ring-indigo-200 focus:border-indigo-300"
-            required
-          />
-        </div>
-
-        <div className="mb-4">
           <label htmlFor="postDate" className="block text-gray-700">
-            Post Date:
+            Scholarship Post Date:
           </label>
           <input
             type="date"
@@ -207,26 +275,13 @@ const AddUniversity = () => {
         </div>
 
         <div className="mb-4">
-          <label htmlFor="serviceCharge" className="block text-gray-700">
-            Service Charge:
+          <label htmlFor="postedUserEmail" className="block text-gray-700">
+            Posted User Email:
           </label>
           <input
-            type="text"
-            id="serviceCharge"
-            name="serviceCharge"
-            className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring focus:ring-indigo-200 focus:border-indigo-300"
-            required
-          />
-        </div>
-
-        <div className="mb-4">
-          <label htmlFor="applicationFees" className="block text-gray-700">
-            Application Fees:
-          </label>
-          <input
-            type="text"
-            id="applicationFees"
-            name="applicationFees"
+            type="email"
+            id="postedUserEmail"
+            name="postedUserEmail"
             className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring focus:ring-indigo-200 focus:border-indigo-300"
             required
           />
@@ -235,8 +290,9 @@ const AddUniversity = () => {
         <div className="text-center ">
           <input
             type="submit"
-            value="Submit"
+            value={loading ? "Submitting..." : "Submit"}
             className="bg-indigo-500 w-full hover:bg-indigo-700 text-white font-bold py-2 px-4 rounded"
+            disabled={loading}
           />
         </div>
       </form>
