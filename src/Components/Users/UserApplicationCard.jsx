@@ -6,15 +6,15 @@ import useAxiosSecure from "../../Hooks/useAxiosSecure";
 import useAuth from "../../Hooks/useAuth";
 
 const UserApplicationCard = ({ application, index, refetch }) => {
-  const axiosSecure = useAxiosSecure()
-  const {user} = useAuth()
-  const {data: role = []} = useQuery({
-    queryKey: ['role',user?.email],
+  const axiosSecure = useAxiosSecure();
+  const { user } = useAuth();
+  const { data: role = [] } = useQuery({
+    queryKey: ["role", user?.email],
     queryFn: async () => {
-      const res = await axiosSecure.get(`/users/role/${user?.email}`)
-      return res.data
-    }
-  })
+      const res = await axiosSecure.get(`/users/role/${user?.email}`);
+      return res.data;
+    },
+  });
   const {
     _id,
     university_name,
@@ -50,14 +50,15 @@ const UserApplicationCard = ({ application, index, refetch }) => {
       }
     });
   };
- const handleUpdateStatus = _id => {
-  axiosSecure.patch(`/applications/${_id}`,{
-    status: 'approved'
-  })
-  .then(res => {
-   console.log(res.data)
-  })
- }
+  const handleUpdateStatus = (_id) => {
+    axiosSecure
+      .patch(`/applications/${_id}`, {
+        status: "approved",
+      })
+      .then((res) => {
+        console.log(res.data);
+      });
+  };
   return (
     <tr>
       <th>
@@ -72,18 +73,19 @@ const UserApplicationCard = ({ application, index, refetch }) => {
       <td>${application_fees}</td>
       <td>${service_charge}</td>
       <td>
-        {
-          role.role === 'user' &&
+        {role.role === "user" && (
           <button className="badge badge-info badge-sm text-white">
-          {status}
-        </button>
-        }
-        {
-          role.role === 'admin' &&
-          <button onClick={() => handleUpdateStatus(_id)} className="badge badge-info badge-sm text-white">
-         {status}
-        </button>
-        }
+            {status}
+          </button>
+        )}
+        {role.role === "admin" && (
+          <button
+            onClick={() => handleUpdateStatus(_id)}
+            className="badge badge-info badge-sm text-white"
+          >
+            {status}
+          </button>
+        )}
       </td>
       <th>
         <button
@@ -93,14 +95,16 @@ const UserApplicationCard = ({ application, index, refetch }) => {
           Delete
         </button>
       </th>
-      <th>
-        <Link
-          to={`/userDashboard/updateapplication/${_id}`}
-          className="btn btn-warning btn-xs text-white"
-        >
-          Update
-        </Link>
-      </th>
+      {role.role === "user" && (
+        <th>
+          <Link
+            to={`/userDashboard/updateapplication/${_id}`}
+            className="btn btn-warning btn-xs text-white"
+          >
+            Update
+          </Link>
+        </th>
+      )}
     </tr>
   );
 };
