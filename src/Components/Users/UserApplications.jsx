@@ -42,6 +42,7 @@ const UserApplications = () => {
                 <th>Application Status</th>
                 <th>Delete</th>
                 <th>Update</th>
+                <th>Add Review</th>
                 
               </tr>
             </thead>

@@ -1,4 +1,4 @@
-import { Rating } from "primereact/rating";
+
 import { useState } from "react";
 import { Link, useLoaderData } from "react-router-dom";
 import useAxiosPublic from "../Hooks/useAxiosPublic";
@@ -16,7 +16,7 @@ import Swal from "sweetalert2";
 
 const ScholarDetails = () => {
   const scholarUniversity = useLoaderData();
-  const [value, setValue] = useState(1);
+  
   const axiosPublic = useAxiosPublic();
   const { user } = useAuth();
 
@@ -35,49 +35,7 @@ const ScholarDetails = () => {
     applicationFees,
   } = scholarUniversity;
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    const form = e.target;
-    const email = user?.email;
-    const reviewer_name = user?.displayName;
-    const reviewer_image = user?.photoURL;
-    const review_date = new Date();
-    const universityId = _id;
-    const reviewer_rating = value;
-    const scholarship_name = scholarshipCategory;
-    const reviewer_comments = form.review.value;
-    const reviewsCollection = {
-        email,
-      reviewer_name,
-      reviewer_image,
-      review_date,
-      universityId,
-      universityName,
-      reviewer_rating,
-      reviewer_comments,
-      scholarship_name
-
-    };
-
-    axiosPublic
-      .post("/reviews", reviewsCollection)
-      .then((res) => {
-        form.reset();
-        if (res.data) {
-          Swal.fire({
-            position: "top-center",
-            icon: "success",
-            title: "Review Add Success",
-            showConfirmButton: false,
-            timer: 1500,
-          });
-        }
-        refetch();
-      })
-      .catch((err) => {
-        console.error(err);
-      });
-  };
+  
 
   const { data: reviews = [], refetch } = useQuery({
     queryKey: ["reviews"],
@@ -88,7 +46,6 @@ const ScholarDetails = () => {
   });
 
   const filterReviews = reviews.filter((review) => review.universityId === _id);
-
 
   return (
     <>
@@ -124,7 +81,7 @@ const ScholarDetails = () => {
               Application Fees: ${applicationFees}
             </p>
             <Link
-             to={`/payment/${_id}`}
+              to={`/payment/${_id}`}
               className="self-start btn bg-blue-600 text-white hover:bg-blue-700"
             >
               Apply Scholarship
@@ -133,43 +90,7 @@ const ScholarDetails = () => {
         </div>
       </div>
 
-      <div className="grid grid-cols md:grid-cols-2 lg:grid-cols-2 gap-6">
-        <div className="flex flex-col w-[410px] md:w-full lg:w-full md:p-8  shadow-sm rounded-xl lg:p-12 dark:bg-gray-50 dark:text-gray-800">
-          <form
-            onSubmit={handleSubmit}
-            className="flex flex-col items-center w-full"
-          >
-            <h2 className="text-3xl font-semibold text-center">
-              Your opinion matters!
-            </h2>
-            <div className="flex flex-col items-center py-6 space-y-3">
-              <span className="text-center">How was your experience?</span>
-              <div className="flex space-x-3">
-                <Rating
-                  value={value}
-                  onChange={(e) => setValue(e.value)}
-                  cancel={false}
-                  required
-                />
-              </div>
-            </div>
-            <div className="flex flex-col w-full">
-              <textarea
-              required
-                name="review"
-                rows="3"
-                placeholder="Message..."
-                className="p-4 border rounded-md resize-none dark:text-gray-800 dark:bg-gray-50"
-              ></textarea>
-              <button
-                type="submit"
-                className="py-4 bg-blue-600 text-white my-8 font-semibold rounded-md dark:text-gray-50 dark:bg-blue-600"
-              >
-                Leave feedback
-              </button>
-            </div>
-          </form>
-        </div>
+      <div className="">
         <div>
           <Swiper
             slidesPerView={2}
@@ -181,10 +102,10 @@ const ScholarDetails = () => {
               clickable: true,
             }}
             autoplay={{
-                delay: 2500,
-                disableOnInteraction: false,
-              }}
-            modules={[Autoplay,Grid, Pagination]}
+              delay: 2500,
+              disableOnInteraction: false,
+            }}
+            modules={[Autoplay, Grid, Pagination]}
             className="mySwiper"
           >
             {filterReviews.map((review) => (

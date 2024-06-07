@@ -5,12 +5,13 @@ import { useQuery } from "@tanstack/react-query";
 import useAxiosSecure from "../../Hooks/useAxiosSecure";
 import useAuth from "../../Hooks/useAuth";
 import { useState } from "react";
-import { async } from '@firebase/util';
-
+import { Rating } from "primereact/rating";
 const UserApplicationCard = ({ application, index, refetch }) => {
   const axiosSecure = useAxiosSecure();
   const [adminAction, setAdminAction] = useState("");
   const [modal, setModal] = useState(false);
+  const [modal2, setModal2] = useState(false);
+  const [value, setValue] = useState(1);
   const { user } = useAuth();
   const { data: role = [] } = useQuery({
     queryKey: ["role", user?.email],
@@ -29,9 +30,9 @@ const UserApplicationCard = ({ application, index, refetch }) => {
     applied_degree,
     application_fees,
     service_charge,
-    feedback
+    feedback,
   } = application;
-  console.log(feedback)
+
   const axiosPublic = useAxiosPublic();
 
   const handleDeleteApplication = (_id) => {
@@ -68,7 +69,7 @@ const UserApplicationCard = ({ application, index, refetch }) => {
       const res = await axiosSecure.patch(`/applications/${_id}`, {
         status: action,
       });
-      console.log(res.data);
+
       refetch();
       Swal.fire({
         title: "Success!",
@@ -87,33 +88,80 @@ const UserApplicationCard = ({ application, index, refetch }) => {
 
   const handleFeddBack = async (_id) => {
     setModal(true);
-    document.getElementById('my_modal_3').showModal();
-   
+    document.getElementById("my_modal_3").showModal();
   };
   const handleFeedBackForm = async (e) => {
     try {
       e.preventDefault();
-      const form = e.target
-      const feedback = form.message.value
-      await axiosSecure.put(`/applications/${_id}`,{
-        feedback: feedback
-      })
-      .then(res => {
-        console.log(res.data)
-        if(res.data) {
-          Swal.fire({
-            title: "Success!",
-            text: "Feedback Send Success.",
-            icon: "success",
-          });
-        }
-      })
+      const form = e.target;
+      const feedback = form.message.value;
+      await axiosSecure
+        .put(`/applications/${_id}`, {
+          feedback: feedback,
+        })
+        .then((res) => {
+          console.log(res.data);
+          if (res.data) {
+            Swal.fire({
+              title: "Success!",
+              text: "Feedback Send Success.",
+              icon: "success",
+            });
+          }
+        });
       refetch();
       setModal(false);
-    } catch{
+    } catch {
       console.log(error);
     }
-  }
+  };
+  const handleAddReview = () => {
+    setModal2(true);
+    document.getElementById("my_modal_4").showModal();
+  };
+  const handleSubmit = (e) => {
+    e.preventDefault();
+
+    const form = e.target;
+    const email = user?.email;
+    const reviewer_name = user?.displayName;
+    const reviewer_image = user?.photoURL;
+    const review_date = new Date();
+    const universityId = _id;
+    const reviewer_rating = value;
+    const scholarship_name = application.scholarship_name;
+    const reviewer_comments = form.review.value;
+    const reviewsCollection = {
+      email,
+      reviewer_name,
+      reviewer_image,
+      review_date,
+      universityId,
+      universityName,
+      reviewer_rating,
+      reviewer_comments,
+      scholarship_name,
+    };
+
+    axiosPublic
+      .post("/reviews", reviewsCollection)
+      .then((res) => {
+        form.reset();
+        if (res.data) {
+          Swal.fire({
+            position: "top-center",
+            icon: "success",
+            title: "Review Add Success",
+            showConfirmButton: false,
+            timer: 1500,
+          });
+        }
+        refetch();
+      })
+      .catch((err) => {
+        console.error(err);
+      });
+  };
   return (
     <>
       <tr>
@@ -130,7 +178,7 @@ const UserApplicationCard = ({ application, index, refetch }) => {
         <td>
           {role.role === "user" && (
             <button className="badge badge-info badge-sm text-white">
-              {status ? status : 'pending'}
+              {status ? status : "pending"}
             </button>
           )}
           {role.role === "admin" && (
@@ -158,14 +206,24 @@ const UserApplicationCard = ({ application, index, refetch }) => {
           </button>
         </th>
         {role.role === "user" && (
-          <th>
-            <Link
-              to={`/userDashboard/updateapplication/${_id}`}
-              className="btn btn-warning btn-xs text-white"
-            >
-              Update
-            </Link>
-          </th>
+          <>
+            <th>
+              <Link
+                to={`/userDashboard/updateapplication/${_id}`}
+                className="btn btn-warning btn-xs text-white"
+              >
+                Update
+              </Link>
+            </th>
+            <th>
+              <button
+                onClick={() => handleAddReview(_id)}
+                className="btn btn-warning btn-xs text-white"
+              >
+                Add Review
+              </button>
+            </th>
+          </>
         )}
         {role.role === "admin" && (
           <th>
@@ -182,19 +240,80 @@ const UserApplicationCard = ({ application, index, refetch }) => {
         <dialog id="my_modal_3" className="modal" open>
           <div className="modal-box border-2 rounded-lg p-4">
             <form method="dialog">
-              <button className="btn btn-sm btn-circle btn-ghost absolute right-2 top-2" onClick={() => setModal(false)}>
+              <button
+                className="btn btn-sm btn-circle btn-ghost absolute right-2 top-2"
+                onClick={() => setModal(false)}
+              >
                 ✕
               </button>
             </form>
             <form onSubmit={handleFeedBackForm}>
-            <h3 className="font-bold text-lg mb-4">Feedback</h3>
-            <div>
-              <label htmlFor="message" className="text-sm font-semibold">Message</label>
-              <textarea id="message" name="message" rows="3" className="w-full p-3 rounded border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500"></textarea>
-            </div>
-            <button type="submit" className="w-full p-3 mt-4 text-sm font-bold tracking-wide uppercase rounded bg-blue-600 text-white hover:bg-blue-700">
-              Send Message
-            </button>
+              <h3 className="font-bold text-lg mb-4">Feedback</h3>
+              <div>
+                <label htmlFor="message" className="text-sm font-semibold">
+                  Message
+                </label>
+                <textarea
+                  id="message"
+                  name="message"
+                  rows="3"
+                  className="w-full p-3 rounded border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                ></textarea>
+              </div>
+              <button
+                type="submit"
+                className="w-full p-3 mt-4 text-sm font-bold tracking-wide uppercase rounded bg-blue-600 text-white hover:bg-blue-700"
+              >
+                Send Message
+              </button>
+            </form>
+          </div>
+        </dialog>
+      )}
+      {modal2 && (
+        <dialog id="my_modal_4" className="modal" open>
+          <div className="modal-box border-2 rounded-lg p-4">
+            <form method="dialog">
+              <button
+                className="btn btn-sm btn-circle btn-ghost absolute right-2 top-2"
+                onClick={() => setModal(false)}
+              >
+                ✕
+              </button>
+            </form>
+            <form
+              onSubmit={handleSubmit}
+              className="flex flex-col items-center w-full"
+            >
+              <h2 className="text-3xl font-semibold text-center">
+                Your opinion matters!
+              </h2>
+              <div className="flex flex-col items-center py-6 space-y-3">
+                <span className="text-center">How was your experience?</span>
+                <div className="flex space-x-3">
+                  <Rating
+                    value={value}
+                    onChange={(e) => setValue(e.value)}
+                    cancel={false}
+                    required
+                  />
+                </div>
+              </div>
+              <div className="flex flex-col w-full">
+                <textarea
+                  required
+                  name="review"
+                  rows="3"
+                  placeholder="Message..."
+                  className="p-4 border rounded-md resize-none dark:text-gray-800 dark:bg-gray-50"
+                ></textarea>
+                <button
+                  type="submit"
+                  className="py-4 bg-blue-600 text-white my-8 font-semibold rounded-md dark:text-gray-50 dark:bg-blue-600"
+                >
+                  Leave feedback
+                </button>
+              </div>
             </form>
           </div>
         </dialog>
