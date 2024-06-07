@@ -167,8 +167,9 @@ console.log(roleType.role)
 
           {
             user && 
-            <div className="flex justify-center items-center md:block">
-            <a
+            <div className="flex justify-center items-center gap-3">
+           <div>
+           <a
               className="relative text-gray-700 transition-colors duration-300 transform dark:text-gray-200 hover:text-gray-600 dark:hover:text-gray-300"
               href="#"
             >
@@ -180,6 +181,7 @@ console.log(roleType.role)
 
               <span className="absolute top-0 left-0 p-1 text-xs text-white bg-blue-500 rounded-full"></span>
             </a>
+           </div>
             <div>
             <p>{user?.displayName}</p>
             </div>

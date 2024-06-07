@@ -130,7 +130,7 @@ const UserApplicationCard = ({ application, index, refetch }) => {
         <td>
           {role.role === "user" && (
             <button className="badge badge-info badge-sm text-white">
-              {status}
+              {status ? status : 'pending'}
             </button>
           )}
           {role.role === "admin" && (
