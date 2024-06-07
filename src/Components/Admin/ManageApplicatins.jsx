@@ -42,7 +42,7 @@ const ManageApplicatins = () => {
                 <th>Service Charge</th>
                 <th>Application Status</th>
                 <th>Delete</th>
-                <th>Update</th>
+                <th>Feedback</th>
                 
               </tr>
             </thead>
