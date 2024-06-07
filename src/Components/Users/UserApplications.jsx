@@ -8,7 +8,13 @@ import NodataFound from "../../Utilities/NodataFound";
 const UserApplications = () => {
   const { user } = useAuth();
   const axiosPublic = useAxiosPublic();
-  
+  const { data: role = [] } = useQuery({
+    queryKey: ["role", user?.email],
+    queryFn: async () => {
+      const res = await axiosSecure.get(`/users/role/${user?.email}`);
+      return res.data;
+    },
+  });
   const { data: applications = [], isPending,refetch } = useQuery({
     queryKey: ["applications"],
     queryFn: async () => {
@@ -43,7 +49,11 @@ const UserApplications = () => {
                 <th>Application Status</th>
                 <th>Delete</th>
                 <th>Update</th>
-                <th>Add Review</th>
+                {
+                  role.role === 'admin' && role.role === 'moderator' &&
+                  <th>Add Review</th>
+                }
+                
                 
               </tr>
             </thead>
