@@ -19,6 +19,7 @@ import AddUniversity from "../Components/Admin/AddUniversity";
 import ManageApplicatins from "../Components/Admin/ManageApplicatins";
 import ManageReview from "../Components/Admin/ManageReview";
 import ManageScholar from "../Components/Admin/ManageScholar";
+import PrivateRoute from './../Provider/PrivateRoute';
 
 
 
@@ -38,18 +39,18 @@ const router = createBrowserRouter([
           },
         {
             path: "/scholarShipDetails/:id",
-            element: <ScholarDetails/>,
+            element: <PrivateRoute><ScholarDetails/></PrivateRoute>,
             loader: ({params}) => fetch(`http://localhost:3000/university/${params.id}`)
         
         },
         {
           path: "/payment/:id",
-          element: <Payment/>,
+          element: <PrivateRoute><Payment/></PrivateRoute>,
           loader: ({params}) => fetch(`http://localhost:3000/university/${params.id}`)
         },
         {
           path: "/application/:id",
-          element: <ApplicationForm/>,
+          element: <PrivateRoute><ApplicationForm/></PrivateRoute>,
           loader: ({params}) => fetch(`http://localhost:3000/university/${params.id}`)
         },
       
@@ -66,29 +67,29 @@ const router = createBrowserRouter([
     },
     {
       path: "/userDashboard",
-      element: <UserDashboard/>,
+      element: <PrivateRoute><UserDashboard/></PrivateRoute>,
       children: [
         // users route
         {
           path: "userApplication",
-          element: <UserApplications/>,
+          element: <PrivateRoute><UserApplications/></PrivateRoute>,
         },
         {
           path: "userProfile",
-          element: <UserProfile/>
+          element: <PrivateRoute><UserProfile/></PrivateRoute>,
         },
         {
           path: "userReview",
-          element: <UserReview/>
+          element: <PrivateRoute><UserReview/></PrivateRoute>,
         },
         {
           path: "updatereview/:id",
-          element: <UpdateReview/>,
+          element: <PrivateRoute><UserReview/></PrivateRoute>,
           loader: ({params}) => fetch(`http://localhost:3000/reviews/${params.id}`)
         },
         {
           path: "updateapplication/:id",
-          element: <UpdateApplication/>,
+          element: <PrivateRoute><UpdateApplication/></PrivateRoute>,
           loader: ({params}) => fetch(`http://localhost:3000/applications/${params.id}`)
         },
         // admin routes
