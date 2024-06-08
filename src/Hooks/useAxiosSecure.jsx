@@ -1,6 +1,10 @@
 import axios from 'axios';
+import { useNavigate } from 'react-router-dom';
+import useAuth from './useAuth';
 
 const useAxiosSecure = () => {
+    const navigate = useNavigate()
+    const {logout} = useAuth()
   const axiosInstance = axios.create({
     baseURL: 'http://localhost:3000',
     headers: {
@@ -16,7 +20,17 @@ const useAxiosSecure = () => {
       }
       return config;
     },
-    error => Promise.reject(error)
+    error => {
+        const status = error.response.status
+        if(status === 401 || status === 403) {
+            logout()
+            .then(() => {
+                console.log('error from axios token')
+            })
+            navigate('/login')
+        }
+        Promise.reject(error)
+    }
   );
 
   return axiosInstance;
