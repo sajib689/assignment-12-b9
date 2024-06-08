@@ -184,7 +184,7 @@ const UserApplicationCard = ({ application, index, refetch }) => {
               {status ? status : "pending"}
             </button>
           )}
-          {role.role === "admin" && (
+          {role.role === "admin" || role.role === "moderator" && (
             <select
               name="role"
               className="select select-bordered w-xl max-w-xs"
@@ -228,7 +228,7 @@ const UserApplicationCard = ({ application, index, refetch }) => {
             </th>
           </>
         )}
-        {role.role === "admin" && (
+        {role.role === "admin" || role.role === "moderator" && (
           <th>
             <button
               onClick={() => handleFeddBack(_id)}

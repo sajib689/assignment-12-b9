@@ -41,7 +41,7 @@ const UserMenu = () => {
           </li>
         </>
       )}
-      {role.role === "admin" && (
+      {role.role === "admin" || role.role === "moderator" && (
         <>
           <li>
             <Link to="/userDashboard/addscholarships">Add Scholarship</Link>
