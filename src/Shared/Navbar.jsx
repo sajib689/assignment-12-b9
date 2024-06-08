@@ -15,10 +15,10 @@ const Navbar = () => {
   const axiosSecure = useAxiosSecure();
   const email = user?.email;
   useEffect(() => {
-    axiosPublic.get("/users").then((res) => {
+    axiosSecure.get("/users").then((res) => {
       setUsers(res.data);
     });
-  }, [axiosPublic]);
+  }, [axiosSecure]);
   const toggleMenu = () => {
     setIsOpen(!isOpen);
   };
@@ -66,15 +66,15 @@ const Navbar = () => {
         </Link>
       )}
 
-      {roleType.role === "admin" ||
-        (roleType.role === "moderator" && (
-          <Link
-            to="/userDashboard/userApplication"
-            className="my-2 text-gray-700 transition-colors duration-300 transform dark:text-gray-200 hover:text-blue-500 dark:hover:text-blue-400 md:mx-4 md:my-0"
-          >
-            Admin Dashboard
-          </Link>
-        ))}
+      {roleType.role === "admin" || roleType.role === "moderator" ? (
+        <Link
+          to="/userDashboard/userApplication"
+          className="my-2 text-gray-700 transition-colors duration-300 transform dark:text-gray-200 hover:text-blue-500 dark:hover:text-blue-400 md:mx-4 md:my-0"
+        >
+          Admin Dashboard
+        </Link>
+      ) : null}
+
       {user ? (
         <Link
           onClick={handleLogOut}

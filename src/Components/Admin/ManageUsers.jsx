@@ -10,7 +10,11 @@ const ManageUsers = () => {
     const {data: users = [], refetch, isPending} = useQuery({
         queryKey: ['users'],
         queryFn: async () => {
-            const res = await axiosSecure.get('/users')
+            const res = await axiosSecure.get('/users',{
+              headers: {
+                authorization : `Bearer ${localStorage.getItem('token')}`
+              }
+            })
             return res.data
         }
     })
@@ -40,7 +44,7 @@ const ManageUsers = () => {
               </thead>
               <tbody>
                 {/* row 1 */}
-                {users.map((userAll,index) => (
+                {users?.map((userAll,index) => (
                   <ManageUsersCard
                     key={userAll._id}
                     index={index}

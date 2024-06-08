@@ -184,7 +184,7 @@ const UserApplicationCard = ({ application, index, refetch }) => {
               {status ? status : "pending"}
             </button>
           )}
-          {role.role === "admin" || role.role === "moderator" && (
+          {role.role === "admin" || role.role === "moderator" ? (
             <select
               name="role"
               className="select select-bordered w-xl max-w-xs"
@@ -198,7 +198,7 @@ const UserApplicationCard = ({ application, index, refetch }) => {
               <option value="completed">Completed</option>
               <option value="cancel">Cancel</option>
             </select>
-          )}
+          ): null}
         </td>
         <th>
           <button

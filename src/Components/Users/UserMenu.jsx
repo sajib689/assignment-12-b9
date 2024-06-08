@@ -12,10 +12,11 @@ const UserMenu = () => {
   const axiosPublic = useAxiosPublic();
   const axiosSecure = useAxiosSecure();
   useEffect(() => {
-    axiosPublic.get("/users").then((res) => {
+    axiosSecure.get("/users")
+    .then((res) => {
       setUsers(res.data);
     });
-  }, [axiosPublic]);
+  }, [axiosSecure]);
   const { data: role = [] } = useQuery({
     queryKey: ["role", user?.email],
     queryFn: async () => {
@@ -41,7 +42,7 @@ const UserMenu = () => {
           </li>
         </>
       )}
-      {role.role === "admin" || role.role === "moderator" && (
+      {role.role === "admin" || role.role === "moderator" ? (
         <>
           <li>
             <Link to="/userDashboard/addscholarships">Add Scholarship</Link>
@@ -59,7 +60,7 @@ const UserMenu = () => {
             <Link to="/userDashboard/managereview">Manage Review</Link>
           </li>
         </>
-      )}
+      ): null}
       {role.role === "admin" && (
         <li>
           <Link to="/userDashboard/manageusers">Manage Users</Link>
