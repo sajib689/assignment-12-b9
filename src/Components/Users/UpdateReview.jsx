@@ -7,9 +7,10 @@ import Swal from "sweetalert2";
 
 const UpdateReview = () => {
     const review = useLoaderData()
-    const [value, setValue] = useState(review?.reviewer_rating)
-    const {_id,reviewer_comments} = review
     const axiosPublic = useAxiosPublic()
+    const {_id,reviewer_comments} = review
+    const [value, setValue] = useState(review?.reviewer_rating)
+    
     const navigate = useNavigate()
     const handleUpdateReview = e => {
         e.preventDefault()

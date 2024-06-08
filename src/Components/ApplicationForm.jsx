@@ -70,7 +70,7 @@ const ApplicationForm = () => {
         university_name: university?.universityName,
         university_address: university?.country,
         subject_category: university?.subjectName,
-        applied_degree: university?.scholarshipCategory,
+        applied_degree: university?.degree,
         scholarship_category: university?.scholarshipCategory,
         application_fees: university?.applicationFees,
         service_charge: university?.serviceCharge,

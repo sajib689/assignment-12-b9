@@ -136,6 +136,7 @@ const UserApplicationCard = ({ application, index, refetch }) => {
     const reviewsCollection = {
       email,
       reviewer_name,
+      applied_degree,
       reviewer_image,
       review_date,
       universityId,

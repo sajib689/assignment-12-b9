@@ -24,7 +24,7 @@ const ManageReview = () => {
   if (reviews.length === 0) return <NodataFound />;
   return (
     <div className="mt-12">
-      <h1 className="text-3xl font-bold mt-5">All Reviews: {reviews.length}</h1>
+      <h1 className="text-3xl font-bold mt-5 mb-5">All Reviews: {reviews.length}</h1>
       <div>
         <div className="overflow-x-auto">
           <div className="grid grid-cols md:grid-cols-3 lg:grid-cols-3 gap-6">
