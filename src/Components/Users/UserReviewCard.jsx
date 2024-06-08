@@ -13,6 +13,7 @@ const UserReviewCard = ({ review, index,refetch }) => {
     review_date,
     applied_degree
   } = review;
+  console.log(review)
   const date = new Date(review_date).toLocaleDateString();
   const handleDeleteReview = (_id) => {
     Swal.fire({

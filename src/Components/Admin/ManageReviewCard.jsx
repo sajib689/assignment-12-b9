@@ -2,6 +2,7 @@ import React from 'react';
 
 const ManageReviewCard = ({review}) => {
     const {_id,universityName,} = review
+    console.log(review)
     return (
         <div className="w-full max-w-md px-8 py-4 mt-16 bg-white rounded-lg shadow-lg dark:bg-gray-800">
         <div className="flex justify-center -mt-16 md:justify-end">

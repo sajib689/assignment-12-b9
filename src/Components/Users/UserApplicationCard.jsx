@@ -32,10 +32,10 @@ const UserApplicationCard = ({ application, index, refetch }) => {
     application_fees,
     service_charge,
     feedback,
+    
   } = application;
 
   const axiosPublic = useAxiosPublic();
-
   const handleDeleteApplication = (_id) => {
     Swal.fire({
       title: "Are you sure?",
@@ -129,7 +129,7 @@ const UserApplicationCard = ({ application, index, refetch }) => {
     const reviewer_image = user?.photoURL;
     const review_date = new Date();
     const universityId = scholarshipId;
-    const applied_degree = applied_degree;
+    const applied_degree = application.applied_degree;
     const reviewer_rating = value;
     const scholarship_name = application.scholarship_name;
     const reviewer_comments = form.review.value;
@@ -228,7 +228,7 @@ const UserApplicationCard = ({ application, index, refetch }) => {
             </th>
           </>
         )}
-        {role.role === "admin" || role.role === "moderator" && (
+        {role.role === "admin" || role.role === "moderator" ? (
           <th>
             <button
               onClick={() => handleFeddBack(_id)}
@@ -237,7 +237,7 @@ const UserApplicationCard = ({ application, index, refetch }) => {
               Feedback
             </button>
           </th>
-        )}
+        ): null}
       </tr>
       {modal && (
         <dialog id="my_modal_3" className="modal" open>

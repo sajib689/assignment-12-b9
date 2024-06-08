@@ -50,7 +50,7 @@ const UserApplications = () => {
                 <th>Delete</th>
                 <th>Update</th>
                 {
-                  role.role === 'admin' && role.role === 'moderator' &&
+                  role.role === 'user'  &&
                   <th>Add Review</th>
                 }
                 

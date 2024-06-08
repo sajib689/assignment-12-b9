@@ -3,6 +3,7 @@ import useAuth from '../Hooks/useAuth';
 import useAxiosPublic from '../Hooks/useAxiosPublic';
 import { useLoaderData, useNavigate } from 'react-router-dom';
 import Swal from 'sweetalert2';
+import useAxiosSecure from '../Hooks/useAxiosSecure';
 
 const photo_Api = import.meta.env.VITE_IMAGE_API_KEY;
 const image_host_url = `https://api.imgbb.com/1/upload?key=${photo_Api}`;
@@ -12,9 +13,10 @@ const ApplicationForm = () => {
   const [users, setUsers] = useState([])
   const userId = users?.map(user => user._id)
   const axiosPublic = useAxiosPublic();
+  const axiosSecure = useAxiosSecure()
   const university = useLoaderData()
   const navigate = useNavigate()
-  axiosPublic.get('/users')
+  axiosSecure.get('/users')
   .then(res => {
     setUsers(res.data)
   })
@@ -69,6 +71,7 @@ const ApplicationForm = () => {
         university_address: university?.country,
         subject_category: university?.subjectName,
         applied_degree: university?.scholarshipCategory,
+        scholarship_category: university?.scholarshipCategory,
         application_fees: university?.applicationFees,
         service_charge: university?.serviceCharge,
         date: new Date().toLocaleDateString(),

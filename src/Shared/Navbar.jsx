@@ -14,11 +14,7 @@ const Navbar = () => {
   const axiosPublic = useAxiosPublic();
   const axiosSecure = useAxiosSecure();
   const email = user?.email;
-  useEffect(() => {
-    axiosSecure.get("/users").then((res) => {
-      setUsers(res.data);
-    });
-  }, [axiosSecure]);
+  
   const toggleMenu = () => {
     setIsOpen(!isOpen);
   };
@@ -40,9 +36,10 @@ const Navbar = () => {
       const res = await axiosSecure.get(`/users/role/${email}`);
       return res.data;
     },
+    enabled: !!email
   });
   // if( isPending) return <Loader/>
-  console.log(roleType.role);
+  
   const links = (
     <>
       <Link

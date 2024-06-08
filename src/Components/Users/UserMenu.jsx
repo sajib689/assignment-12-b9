@@ -8,15 +8,8 @@ import { useQuery } from "@tanstack/react-query";
 
 const UserMenu = () => {
   const { user } = useAuth();
-  const [users, setUsers] = useState([]);
-  const axiosPublic = useAxiosPublic();
   const axiosSecure = useAxiosSecure();
-  useEffect(() => {
-    axiosSecure.get("/users")
-    .then((res) => {
-      setUsers(res.data);
-    });
-  }, [axiosSecure]);
+ 
   const { data: role = [] } = useQuery({
     queryKey: ["role", user?.email],
     queryFn: async () => {
