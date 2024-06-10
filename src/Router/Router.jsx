@@ -20,6 +20,7 @@ import ManageApplicatins from "../Components/Admin/ManageApplicatins";
 import ManageReview from "../Components/Admin/ManageReview";
 import ManageScholar from "../Components/Admin/ManageScholar";
 import PrivateRoute from './../Provider/PrivateRoute';
+import DashboardAdmin from "../Components/Admin/DashboardAdmin";
 
 
 
@@ -112,6 +113,10 @@ const router = createBrowserRouter([
         {
           path: "managescholar",
           element: <ManageScholar/>
+        },
+        {
+          path: "userHome",
+          element: <DashboardAdmin/>
         },
       ]
     },

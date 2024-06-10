@@ -1,6 +1,8 @@
 import { useState } from "react";
 import Swal from "sweetalert2";
 import useAxiosSecure from "../../Hooks/useAxiosSecure";
+import axios from "axios";
+import useAuth from "../../Hooks/useAuth";
 
 const image_api_key = import.meta.env.VITE_IMAGE_API_KEY;
 const image_url = `https://api.imgbb.com/1/upload?key=${image_api_key}`;
@@ -8,22 +10,21 @@ const image_url = `https://api.imgbb.com/1/upload?key=${image_api_key}`;
 const AddUniversity = () => {
   const axiosSecure = useAxiosSecure();
   const [loading, setLoading] = useState(false);
-
+  const {user} = useAuth()
   const handleAddScholar = async (e) => {
     e.preventDefault();
     const form = e.target;
-    const universityImage = form.universityImage.files[0];
-    if (!universityImage) {
-      console.error("University image file is missing");
-      return;
-    }
-
     const formData = new FormData();
-    formData.append("image", universityImage);
-
+    formData.append("image", form.universityImage.files[0]);
+    
     try {
       setLoading(true);
-      const res = await axiosSecure.post(image_url, formData);
+      const res = await axios.post(image_url, formData, {
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
+      });
+
       const universityImageURL = res.data.data.display_url;
       const universityName = form.universityName.value;
       const scholarshipCategory = form.scholarshipCategory.value;
@@ -58,9 +59,9 @@ const AddUniversity = () => {
         postedUserEmail,
       };
 
-      await axiosSecure.post('/university', application);
+      await axiosSecure.post("/university", application);
       Swal.fire({
-        position: "top-end",
+        position: "top-center",
         icon: "success",
         title: "Your scholar has been saved",
         showConfirmButton: false,
@@ -281,6 +282,7 @@ const AddUniversity = () => {
           <input
             type="email"
             id="postedUserEmail"
+            value={user?.email}
             name="postedUserEmail"
             className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring focus:ring-indigo-200 focus:border-indigo-300"
             required

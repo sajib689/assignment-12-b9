@@ -89,6 +89,7 @@ const ApplicationForm = () => {
             timer: 1500
           });
         }
+        navigate('/userDashboard/userApplication')
         
       })
    

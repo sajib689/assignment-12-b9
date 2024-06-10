@@ -9,7 +9,7 @@ import { useQuery } from "@tanstack/react-query";
 const UserMenu = () => {
   const { user } = useAuth();
   const axiosSecure = useAxiosSecure();
- 
+
   const { data: role = [] } = useQuery({
     queryKey: ["role", user?.email],
     queryFn: async () => {
@@ -27,6 +27,7 @@ const UserMenu = () => {
       </li>
       {role.role === "user" && (
         <>
+         
           <li>
             <Link to="/userDashboard/userApplication">My Applications</Link>
           </li>
@@ -37,6 +38,9 @@ const UserMenu = () => {
       )}
       {role.role === "admin" || role.role === "moderator" ? (
         <>
+         <li>
+            <Link to="/userDashboard/userHome">Admin Home</Link>
+          </li>
           <li>
             <Link to="/userDashboard/addscholarships">Add Scholarship</Link>
           </li>
@@ -53,7 +57,7 @@ const UserMenu = () => {
             <Link to="/userDashboard/managereview">Manage Review</Link>
           </li>
         </>
-      ): null}
+      ) : null}
       {role.role === "admin" && (
         <li>
           <Link to="/userDashboard/manageusers">Manage Users</Link>
@@ -89,19 +93,17 @@ const UserMenu = () => {
           </ul>
         </div>
         <Link to="/">
-            <img
-              className="w-auto h-12 sm:h-12"
-              src="https://i.ibb.co/8cDCM5f/SCHOLARHUBSf2.png"
-              alt=""
-            />
-          </Link>
+          <img
+            className="w-auto h-12 sm:h-12"
+            src="https://i.ibb.co/8cDCM5f/SCHOLARHUBSf2.png"
+            alt=""
+          />
+        </Link>
       </div>
       <div className="navbar-center hidden lg:flex">
         <ul className="menu menu-horizontal px-1">{links}</ul>
       </div>
-      <div className="navbar-end">
-       {/* add */}
-      </div>
+      <div className="navbar-end">{/* add */}</div>
     </div>
   );
 };

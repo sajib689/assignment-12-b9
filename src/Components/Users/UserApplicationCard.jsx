@@ -32,7 +32,6 @@ const UserApplicationCard = ({ application, index, refetch }) => {
     application_fees,
     service_charge,
     feedback,
-    
   } = application;
 
   const axiosPublic = useAxiosPublic();
@@ -144,6 +143,7 @@ const UserApplicationCard = ({ application, index, refetch }) => {
       reviewer_rating,
       reviewer_comments,
       scholarship_name,
+      status,
     };
 
     axiosPublic
@@ -159,7 +159,7 @@ const UserApplicationCard = ({ application, index, refetch }) => {
             timer: 1500,
           });
         }
-        setModal2(false)
+        setModal2(false);
         refetch();
       })
       .catch((err) => {
@@ -182,7 +182,7 @@ const UserApplicationCard = ({ application, index, refetch }) => {
         <td>
           {role.role === "user" && (
             <button className="badge badge-info badge-sm text-white">
-              {status ? status : "pending"}
+              {status}
             </button>
           )}
           {role.role === "admin" || role.role === "moderator" ? (
@@ -199,25 +199,37 @@ const UserApplicationCard = ({ application, index, refetch }) => {
               <option value="completed">Completed</option>
               <option value="cancel">Cancel</option>
             </select>
-          ): null}
+          ) : null}
         </td>
         <th>
-          <button
-            onClick={() => handleDeleteApplication(_id)}
-            className="btn btn-warning btn-xs text-white"
-          >
-            Delete
-          </button>
+          {status === "processing" || status === "completed" ? (
+            <button disabled className="btn btn-warning btn-xs text-white">
+              Delete
+            </button>
+          ) : (
+            <button
+              onClick={() => handleDeleteApplication(_id)}
+              className="btn btn-warning btn-xs text-white"
+            >
+              Delete
+            </button>
+          )}
         </th>
         {role.role === "user" && (
           <>
             <th>
-              <Link
-                to={`/userDashboard/updateapplication/${_id}`}
-                className="btn btn-warning btn-xs text-white"
-              >
-                Update
-              </Link>
+              {status === "processing" || status === "completed" ? (
+                <Link disabled className="btn btn-warning btn-xs text-white">
+                  Update
+                </Link>
+              ) : (
+                <Link
+                  to={`/userDashboard/updateapplication/${_id}`}
+                  className="btn btn-warning btn-xs text-white"
+                >
+                  Update
+                </Link>
+              )}
             </th>
             <th>
               <button
@@ -238,7 +250,7 @@ const UserApplicationCard = ({ application, index, refetch }) => {
               Feedback
             </button>
           </th>
-        ): null}
+        ) : null}
       </tr>
       {modal && (
         <dialog id="my_modal_3" className="modal" open>

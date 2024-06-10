@@ -3,20 +3,25 @@ import useAxiosPublic from "../Hooks/useAxiosPublic";
 import TopScholarShipsCard from "./TopScholarShipsCard";
 import Loader from "../Utilities/Loader";
 import { Link } from "react-router-dom";
+import { useState } from "react";
 
 const TopScholarships = () => {
   const axiosPublic = useAxiosPublic();
-  const { data: universities = [], isPending } = useQuery({
-    queryKey: ["universities "],
+  const [page, setPage] = useState(1);
+  const limit = 6;
+
+  const { data: universitiesData = {}, isPending } = useQuery({
+    queryKey: ["universities", page],
     queryFn: async () => {
-      const res = await axiosPublic.get("/university");
+      const res = await axiosPublic.get(`/university?page=${page}&limit=${limit}`);
       return res.data;
     },
+    keepPreviousData: true,
   });
-  const filterUniversities = universities.sort(
-    (a, b) => a.applicationFees - b.applicationFees
-  );
+
   if (isPending) return <Loader />;
+
+  const filterUniversities = universitiesData.universities || [];
 
   return (
     <div className="mt-48 mb-24 max-w-6xl mx-auto">
@@ -35,8 +40,8 @@ const TopScholarships = () => {
         </p>
       </div>
 
-      <div className="grid grid-cols md:grid-cols-3 lg:grid-cols-3 gap-6">
-        {filterUniversities.slice(0, 6)?.map((university) => (
+      <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-3 gap-6">
+        {filterUniversities.map((university) => (
           <TopScholarShipsCard
             key={university._id}
             university={university}
@@ -48,6 +53,22 @@ const TopScholarships = () => {
           View All
         </Link>
       </div>
+      {/* <div className="flex justify-center mt-4">
+        <button
+          onClick={() => setPage((prev) => Math.max(prev - 1, 1))}
+          disabled={page === 1}
+          className="px-4 py-2 mx-1 text-white bg-blue-500 rounded disabled:bg-gray-400"
+        >
+          Previous
+        </button>
+        <button
+          onClick={() => setPage((prev) => prev + 1)}
+          disabled={page === universitiesData.pages}
+          className="px-4 py-2 mx-1 text-white bg-blue-500 rounded disabled:bg-gray-400"
+        >
+          Next
+        </button>
+      </div> */}
     </div>
   );
 };

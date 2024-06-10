@@ -21,7 +21,7 @@ const Navbar = () => {
   const handleLogOut = () => {
     logout().then(() => {
       Swal.fire({
-        position: "top-end",
+        position: "top-center",
         icon: "success",
         title: "Sign Out Success",
         showConfirmButton: false,
@@ -56,7 +56,7 @@ const Navbar = () => {
       </Link>
       {roleType.role === "user" && (
         <Link
-          to="/userDashboard/userApplication"
+          to="/userDashboard/userProfile"
           className="my-2 text-gray-700 transition-colors duration-300 transform dark:text-gray-200 hover:text-blue-500 dark:hover:text-blue-400 md:mx-4 md:my-0"
         >
           User Dashboard
@@ -65,7 +65,7 @@ const Navbar = () => {
 
       {roleType.role === "admin" || roleType.role === "moderator" ? (
         <Link
-          to="/userDashboard/userApplication"
+          to="/userDashboard/userProfile"
           className="my-2 text-gray-700 transition-colors duration-300 transform dark:text-gray-200 hover:text-blue-500 dark:hover:text-blue-400 md:mx-4 md:my-0"
         >
           Admin Dashboard
