@@ -41,18 +41,18 @@ const router = createBrowserRouter([
         {
             path: "/scholarShipDetails/:id",
             element: <PrivateRoute><ScholarDetails/></PrivateRoute>,
-            loader: ({params}) => fetch(`http://localhost:3000/university/${params.id}`)
+            loader: ({params}) => fetch(`https://assignment-12-server-eta-rosy.vercel.app/university/${params.id}`)
         
         },
         {
           path: "/payment/:id",
           element: <PrivateRoute><Payment/></PrivateRoute>,
-          loader: ({params}) => fetch(`http://localhost:3000/university/${params.id}`)
+          loader: ({params}) => fetch(`https://assignment-12-server-eta-rosy.vercel.app/university/${params.id}`)
         },
         {
           path: "/application/:id",
           element: <PrivateRoute><ApplicationForm/></PrivateRoute>,
-          loader: ({params}) => fetch(`http://localhost:3000/university/${params.id}`)
+          loader: ({params}) => fetch(`https://assignment-12-server-eta-rosy.vercel.app/university/${params.id}`)
         },
       
        
@@ -86,12 +86,12 @@ const router = createBrowserRouter([
         {
           path: "updatereview/:id",
           element: <PrivateRoute><UserReview/></PrivateRoute>,
-          loader: ({params}) => fetch(`http://localhost:3000/reviews/${params.id}`)
+          loader: ({params}) => fetch(`https://assignment-12-server-eta-rosy.vercel.app/reviews/${params.id}`)
         },
         {
           path: "updateapplication/:id",
           element: <PrivateRoute><UpdateApplication/></PrivateRoute>,
-          loader: ({params}) => fetch(`http://localhost:3000/applications/${params.id}`)
+          loader: ({params}) => fetch(`https://assignment-12-server-eta-rosy.vercel.app/applications/${params.id}`)
         },
         // admin routes
         {

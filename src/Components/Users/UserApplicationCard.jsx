@@ -202,6 +202,9 @@ const UserApplicationCard = ({ application, index, refetch }) => {
           ) : null}
         </td>
         <th>
+         {
+          role.role === 'user'?
+         <>
           {status === "processing" || status === "completed" ? (
             <button disabled className="btn btn-warning btn-xs text-white">
               Delete
@@ -214,6 +217,21 @@ const UserApplicationCard = ({ application, index, refetch }) => {
               Delete
             </button>
           )}
+         </>
+          :
+          null
+         }
+          {
+            role.role === 'admin' || role === 'moderator' ?
+            <button
+            onClick={() => handleDeleteApplication(_id)}
+            className="btn btn-warning btn-xs text-white"
+          >
+            Delete
+          </button>
+          :
+          null
+          }
         </th>
         {role.role === "user" && (
           <>
