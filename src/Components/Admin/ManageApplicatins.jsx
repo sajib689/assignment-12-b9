@@ -1,12 +1,13 @@
 import React, { useState } from "react";
 import { useQuery } from "@tanstack/react-query";
 import useAxiosPublic from "../../Hooks/useAxiosPublic";
+import useAxiosSecure from "../../Hooks/useAxiosSecure";
 import Loader from "../../Utilities/Loader";
 import NodataFound from "../../Utilities/NodataFound";
 import UserApplicationCard from "../Users/UserApplicationCard";
 
 const ManageApplications = () => {
-  const axiosPublic = useAxiosPublic();
+  const axiosPublic = useAxiosSecure();
   const { data: applications = [], isPending, refetch } = useQuery({
     queryKey: ["applications"],
     queryFn: async () => {
