@@ -1,12 +1,13 @@
 import { useQuery } from "@tanstack/react-query";
 import useAuth from "../../Hooks/useAuth";
 import useAxiosPublic from "../../Hooks/useAxiosPublic";
+import useAxiosSecure from "../../Hooks/useAxiosSecure";
 import Loader from "../../Utilities/Loader";
 import NodataFound from "../../Utilities/NodataFound";
 import ManageReviewCard from "./ManageReviewCard";
 
 const ManageReview = () => {
-  const axiosPublic = useAxiosPublic();
+  const axiosPublic = useAxiosSecure();
   const { user } = useAuth();
 
   const {
