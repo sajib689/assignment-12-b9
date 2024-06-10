@@ -24,7 +24,7 @@ const UserApplications = () => {
   } = useQuery({
     queryKey: ["applications"],
     queryFn: async () => {
-      const res = await axiosPublic.get(`/applications?email=${user?.email}`);
+      const res = await axiosSecure.get(`/applications?email=${user?.email}`);
       return res.data;
     },
   });

@@ -3,9 +3,10 @@ import { LineChart, Line, CartesianGrid, XAxis, YAxis, Tooltip, Legend } from 'r
 import useAxiosPublic from "../../Hooks/useAxiosPublic";
 import Loader from "../../Utilities/Loader";
 import NodataFound from "../../Utilities/NodataFound";
+import useAxiosSecure from './../../Hooks/useAxiosSecure';
 
 const DashboardAdmin = () => {
-  const axiosPublic = useAxiosPublic();
+  const axiosPublic = useAxiosSecure();
   const [data, setData] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
 

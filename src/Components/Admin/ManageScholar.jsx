@@ -11,14 +11,14 @@ const ManageScholar = () => {
     queryKey: ['scholar'],
     queryFn: async () => {
       const res = await axiosSecure.get('/university');
-      return res.data.universities; // Assuming 'universities' is the array of scholarships in your response
+      return res.data.universities; 
     }
   });
 
   if (isPending) return <Loader />;
   if (!data || data.length === 0) return <NodataFound />;
 
-  console.log(data); // Check the structure of 'data'
+ 
 
   return (
     <div className="mt-12">
@@ -44,7 +44,7 @@ const ManageScholar = () => {
             <tbody>
               {data.map((scholar, index) => (
                 <ManageScholarCard
-                  key={scholar._id} // Assuming '_id' is the unique identifier of each scholarship
+                  key={scholar._id} 
                   index={index}
                   scholar={scholar}
                   refetch={refetch}

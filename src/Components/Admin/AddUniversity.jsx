@@ -3,6 +3,7 @@ import Swal from "sweetalert2";
 import useAxiosSecure from "../../Hooks/useAxiosSecure";
 import axios from "axios";
 import useAuth from "../../Hooks/useAuth";
+import { useNavigate } from "react-router-dom";
 
 const image_api_key = import.meta.env.VITE_IMAGE_API_KEY;
 const image_url = `https://api.imgbb.com/1/upload?key=${image_api_key}`;
@@ -11,6 +12,7 @@ const AddUniversity = () => {
   const axiosSecure = useAxiosSecure();
   const [loading, setLoading] = useState(false);
   const {user} = useAuth()
+  const navigate = useNavigate()
   const handleAddScholar = async (e) => {
     e.preventDefault();
     const form = e.target;
@@ -68,6 +70,7 @@ const AddUniversity = () => {
         timer: 1500,
       });
       form.reset();
+      navigate('/userDashboard/managescholar')
     } catch (error) {
       console.error("Error uploading image or submitting form data", error);
     } finally {

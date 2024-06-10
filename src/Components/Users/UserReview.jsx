@@ -4,10 +4,11 @@ import useAxiosPublic from "../../Hooks/useAxiosPublic";
 import UserReviewCard from "./UserReviewCard";
 import Loader from "../../Utilities/Loader";
 import NodataFound from "../../Utilities/NodataFound";
+import useAxiosSecure from "../../Hooks/useAxiosSecure";
 
 
 const UserReview = () => {
-    const axiosPublic = useAxiosPublic()
+    const axiosPublic = useAxiosSecure()
     const {user} = useAuth()
 
     const {data: reviews = [],refetch,isPending} = useQuery({

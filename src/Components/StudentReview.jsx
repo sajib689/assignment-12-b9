@@ -9,8 +9,9 @@ import "swiper/css/grid";
 import "swiper/css/pagination";
 import { Autoplay, Grid, Pagination } from "swiper/modules";
 import ReviewCard from './ReviewCard';
+import useAxiosSecure from '../Hooks/useAxiosSecure';
 const StudentReview = () => {
-    const axiosPublic = useAxiosPublic()
+    const axiosPublic = useAxiosSecure()
     const {data: reviews= []} = useQuery({
         queryKey: ['reviews'],
         queryFn: async () => {
